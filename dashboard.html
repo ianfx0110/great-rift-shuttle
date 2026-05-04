@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Great Rift Portal - Traveler Log</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-bg text-text font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-border fixed w-full z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center space-x-2">
+            <a href="/" class="flex items-center space-x-2">
+              <div class="bg-primary p-1.5 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-5 h-5">
+                  <path d="M4 18h16"></path>
+                  <circle cx="18" cy="18" r="2"></circle>
+                  <circle cx="6" cy="18" r="2"></circle>
+                  <path d="M19 18V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9"></path>
+                  <path d="M16 9v4"></path>
+                  <path d="M3 13h16"></path>
+                  <path d="M8 9h4"></path>
+                </svg>
+              </div>
+              <span class="text-xl font-extrabold tracking-tight text-primary uppercase">Great Rift<span class="text-accent underline decoration-2 underline-offset-4">Portal</span></span>
+            </a>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex space-x-6 items-center font-bold text-gray-400 text-[10px] uppercase tracking-widest">
+            <a href="/booking.html" class="hover:text-primary transition-colors">Book Trip</a>
+            <a href="/parcel.html" class="hover:text-primary transition-colors">Parcels</a>
+            <a href="/tracking.html" class="hover:text-primary transition-colors">Track Cargo</a>
+            <div id="user-menu" class="hidden flex items-center space-x-4">
+              <span class="text-primary border-b-2 border-accent pb-1">Account</span>
+              <button id="logout-btn" class="text-red-500 hover:text-red-700 font-bold uppercase tracking-widest">Logout</button>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-open" class="p-2 text-primary">
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col h-full">
+          <div class="flex justify-between items-center h-16 px-6 border-b border-border">
+            <span class="text-lg font-black text-primary uppercase">Traveler Portal</span>
+            <button id="mobile-menu-close" class="p-2 text-primary">
+              <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+          </div>
+          <div class="flex-1 overflow-y-auto py-8 px-6 space-y-6">
+            <a href="/" class="block text-2xl font-black text-primary uppercase tracking-tighter">Home</a>
+            <a href="/booking.html" class="block text-2xl font-black text-primary uppercase tracking-tighter">Book Trip</a>
+            <a href="/parcel.html" class="block text-2xl font-black text-primary uppercase tracking-tighter">Parcels</a>
+            <a href="/tracking.html" class="block text-2xl font-black text-primary uppercase tracking-tighter">Track Cargo</a>
+            <hr class="border-border"/>
+            <div id="mobile-user-section" class="hidden space-y-6">
+               <a href="/dashboard.html" class="block text-2xl font-black text-accent uppercase tracking-tighter text-accent">My Account</a>
+               <button id="mobile-logout-btn" class="block w-full bg-red-50 text-red-600 py-4 rounded-xl font-black uppercase tracking-widest text-xs">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="bg-white p-6 rounded-xl border border-border shadow-sm text-center">
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-100 shadow-inner">
+              <i data-lucide="user" class="w-8 h-8 text-primary"></i>
+            </div>
+            <h3 id="user-name" class="text-base font-black text-primary mb-0.5">...</h3>
+            <p id="user-email" class="text-[10px] text-gray-400 font-bold uppercase tracking-tight mb-6">...</p>
+            
+            <div class="bg-slate-50 border border-slate-200 border-dashed p-4 rounded-xl text-left mb-6">
+              <div class="flex items-center space-x-2 mb-2">
+                 <i data-lucide="shield-check" class="w-3.5 h-3.5 text-accent"></i>
+                 <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Access Level</span>
+              </div>
+              <div class="flex justify-between items-end">
+                <span id="user-role" class="bg-accent/10 text-accent px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border border-accent/20">BOOKER</span>
+              </div>
+            </div>
+
+            <nav class="space-y-1 text-left">
+              <a href="#" class="group flex items-center px-3 py-2 text-xs font-black uppercase tracking-widest bg-primary text-white rounded-lg shadow-lg shadow-blue-900/10 transition-all">
+                <i data-lucide="layout-dashboard" class="w-4 h-4 mr-3"></i> Traveler Log
+              </a>
+              <a href="#" class="group flex items-center px-3 py-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-all">
+                <i data-lucide="package" class="w-4 h-4 mr-3 group-hover:text-accent"></i> Freight History
+              </a>
+              <a href="#" class="group flex items-center px-3 py-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-all">
+                <i data-lucide="settings" class="w-4 h-4 mr-3 group-hover:text-accent"></i> Prefs
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h2 class="text-xl font-black text-primary uppercase tracking-tight italic">Transit Manifests</h2>
+              <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Active & historic travel records.</p>
+            </div>
+            <div class="flex bg-white p-1 rounded-lg border border-border shadow-sm">
+              <button class="bg-primary text-white px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-900/20">Upcoming</button>
+              <button class="text-gray-400 px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest hover:text-primary transition-colors">Past Logs</button>
+            </div>
+          </div>
+
+          <div id="bookings-list" class="space-y-3">
+            <!-- Loader -->
+            <div class="text-center py-20 bg-white rounded-xl border border-dashed border-border flex flex-col items-center">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
+              <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Syncing with Central Registry...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      import { api, setupAuth } from '/src/main.js';
+      setupAuth();
+
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        window.location.href = '/login.html';
+      } else {
+        // Role-based routing
+        if (user.role === 'admin') {
+          window.location.href = '/admin.html';
+        } else if (user.role === 'driver') {
+          window.location.href = '/driver_dashboard.html';
+        } else if (user.role === 'clerk') {
+          window.location.href = '/clerk_dashboard.html';
+        }
+        
+        document.getElementById('user-name').textContent = user.name;
+        document.getElementById('user-email').textContent = user.email;
+        document.getElementById('user-role').textContent = user.role.toUpperCase();
+        loadBookings();
+      }
+
+      async function loadBookings() {
+        try {
+          const bookings = await api.get(`/api/user/bookings?userId=${user.id}`);
+          const list = document.getElementById('bookings-list');
+          
+          if (bookings.length === 0) {
+            list.innerHTML = `
+              <div class="text-center py-20 bg-white rounded-xl border border-dashed border-border">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">No Transits Found in History</p>
+              </div>
+            `;
+            return;
+          }
+
+          list.innerHTML = bookings.map(b => `
+            <div class="bg-white border border-border p-4 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between group hover:border-primary transition-all border-l-4 border-l-primary">
+              <div class="flex items-center space-x-4">
+                <div class="bg-bg text-primary w-10 h-10 rounded-lg flex items-center justify-center font-black text-xs border border-border shadow-sm italic">GR</div>
+                <div>
+                  <h4 class="text-sm font-black text-primary uppercase tracking-tight flex items-center leading-none mb-1">${b.origin} <i data-lucide="chevrons-right" class="w-3.5 h-3.5 mx-1 text-accent"></i> ${b.destination}</h4>
+                  <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">${new Date(b.departure_time).toLocaleDateString()} • ${new Date(b.departure_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • <span class="text-accent italic">SEAT ${b.seat_number}</span></p>
+                </div>
+              </div>
+              <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                <div class="text-right px-4 border-r border-slate-100">
+                  <p class="text-[8px] font-black text-gray-300 uppercase tracking-widest mb-0.5">Manifest</p>
+                  <span class="status-badge bg-green-50 text-success border-green-100 italic uppercase ml-0">${b.status}</span>
+                </div>
+                <button class="bg-primary text-white px-5 py-2.5 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/10">
+                  Print Manifest
+                </button>
+              </div>
+            </div>
+          `).join('');
+          lucide.createIcons();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      document.getElementById('logout-btn').onclick = () => {
+        localStorage.removeItem('user');
+        window.location.href = '/login.html';
+      };
+    </script>
+  </body>
+</html>
