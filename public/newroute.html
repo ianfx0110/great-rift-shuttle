@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Route | Great Rift Shuttle</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body style="background: #f8fafc;">
+    <main class="container" style="padding: 4rem 0; max-width: 600px;">
+        <div class="card">
+            <h2 style="font-weight: 900; font-style: italic; text-transform: uppercase; margin-bottom: 2rem;">Initialize New Connection</h2>
+            <form style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                    <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Origin</label>
+                    <input type="text" placeholder="e.g. NAIROBI" style="width: 100%;">
+                </div>
+                <div>
+                    <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Destination</label>
+                    <input type="text" placeholder="e.g. MOMBASA" style="width: 100%;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Distance (KM)</label>
+                        <input type="number" placeholder="480" style="width: 100%;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Duration</label>
+                        <input type="text" placeholder="8h 00m" style="width: 100%;">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding: 1.5rem;">Declare Route</button>
+            </form>
+        </div>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

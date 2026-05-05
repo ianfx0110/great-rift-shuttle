@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Matrix | Great Rift Shuttle</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="container" style="padding: 2rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 4rem;">
+            <h1 style="font-weight: 900; font-style: italic; color: var(--primary); margin: 0;">GREAT RIFT</h1>
+            <nav style="display: flex; gap: 1.5rem;">
+                <a href="/" style="text-decoration: none; color: var(--text); font-weight: 700;">Home</a>
+                <a href="/routes.html" style="text-decoration: none; color: var(--accent); font-weight: 700;">Routes</a>
+                <a href="/parcel.html" style="text-decoration: none; color: var(--text); font-weight: 700;">Parcels</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 4rem 0;">
+        <div class="text-center" style="margin-bottom: 4rem;">
+            <h2 style="font-size: 3rem; font-weight: 900; text-transform: uppercase; font-style: italic;">Logistics Matrix</h2>
+            <p style="color: grey;">Our active connection nodes across the Rift Valley.</p>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 1rem;">
+                <thead style="background: var(--border);">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase;">Origin</th>
+                        <th style="padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase;">Destination</th>
+                        <th style="padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase;">Distance</th>
+                        <th style="padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase;">Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 1.5rem; font-weight: 900;">NAIROBI</td>
+                        <td style="padding: 1.5rem; font-weight: 900;">NAKURU</td>
+                        <td style="padding: 1.5rem;">160 KM</td>
+                        <td style="padding: 1.5rem; color: var(--accent); font-style: italic;">3h 00m</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 1.5rem; font-weight: 900;">NAIROBI</td>
+                        <td style="padding: 1.5rem; font-weight: 900;">ELDORET</td>
+                        <td style="padding: 1.5rem;">310 KM</td>
+                        <td style="padding: 1.5rem; color: var(--accent); font-style: italic;">6h 00m</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
