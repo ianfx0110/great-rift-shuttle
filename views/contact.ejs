@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head', { title: 'Contact Terminal' }) %>
+</head>
+<body class="bg-bg text-text font-sans antialiased">
+    <%- include('partials/nav') %>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+       <div class="text-center mb-16">
+          <span class="text-accent font-black text-[10px] uppercase tracking-[3px] mb-2 block">Direct Communication</span>
+          <h1 class="text-5xl font-black text-primary uppercase italic tracking-tighter">Support Terminal</h1>
+          <p class="text-slate-400 text-sm font-bold uppercase tracking-tight mt-1">Connectivity is our priority. Reach out for manifest adjustments.</p>
+       </div>
+
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Voice Channel -->
+          <div class="bg-card p-10 rounded-[2.5rem] border border-border shadow-sm text-center">
+             <div class="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <i data-lucide="phone" class="text-accent w-8 h-8"></i>
+             </div>
+             <h3 class="text-xl font-black text-primary uppercase italic mb-4">Voice Dispatch</h3>
+             <p class="text-slate-500 text-sm mb-6">Immediate tactical coordination with our central dispatch.</p>
+             <p class="text-lg font-black text-primary italic">+254 115 481 162</p>
+          </div>
+
+          <!-- WhatsApp Channel -->
+          <div class="bg-card p-10 rounded-[2.5rem] border border-accent shadow-xl text-center relative overflow-hidden">
+             <div class="absolute -right-4 -top-4 opacity-10">
+                <i data-lucide="message-circle" class="w-24 h-24 text-accent"></i>
+             </div>
+             <div class="bg-[#25D366]/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <i data-lucide="message-square" class="text-[#25D366] w-8 h-8"></i>
+             </div>
+             <h3 class="text-xl font-black text-primary uppercase italic mb-4">WhatsApp Link</h3>
+             <p class="text-slate-500 text-sm mb-6">Real-time status updates and document submission.</p>
+             <a href="https://wa.me/254115481162" target="_blank" class="inline-block bg-[#25D366] text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-[#128C7E] transition-all">
+                Open Chat Room
+             </a>
+          </div>
+
+          <!-- Email Channel -->
+          <div class="bg-card p-10 rounded-[2.5rem] border border-border shadow-sm text-center">
+             <div class="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <i data-lucide="mail" class="text-primary w-8 h-8"></i>
+             </div>
+             <h3 class="text-xl font-black text-primary uppercase italic mb-4">Digital Ledger</h3>
+             <p class="text-slate-500 text-sm mb-6">Official correspondence and corporate charter requests.</p>
+             <p class="text-sm font-black text-primary">help@grshuttle.co.ke</p>
+          </div>
+       </div>
+
+       <!-- Office Grid -->
+       <div class="mt-20 bg-primary p-12 rounded-[3.5rem] text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-800 rounded-full blur-3xl opacity-50"></div>
+          <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+             <div>
+                <h2 class="text-3xl font-black uppercase italic tracking-tighter mb-4">Command Center</h2>
+                <p class="text-blue-100 text-sm leading-relaxed mb-8">Located at the heart of the regional logistics corridor for synchronized operations.</p>
+                <div class="space-y-4">
+                   <div class="flex items-center space-x-4">
+                      <i data-lucide="map-pin" class="text-accent w-5 h-5"></i>
+                      <span class="text-xs font-black uppercase tracking-widest">CBD, Cross Road, Nairobi</span>
+                   </div>
+                   <div class="flex items-center space-x-4">
+                      <i data-lucide="clock" class="text-accent w-5 h-5"></i>
+                      <span class="text-xs font-black uppercase tracking-widest">24/7 Operations Duty</span>
+                   </div>
+                </div>
+             </div>
+             <div class="bg-white/5 rounded-[2rem] h-64 border border-white/10 flex items-center justify-center">
+                <p class="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Satellite Map Stream Offline</p>
+             </div>
+          </div>
+       </div>
+    </main>
+    <%- include('partials/footer') %>
+</body>
+</html>

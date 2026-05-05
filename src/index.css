@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-success: #16a34a;
+  --color-bg: var(--bg);
+  --color-text: var(--text);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --radius-xl: 12px;
+}
+
+:root {
+  --primary: #1e3a8a;
+  --accent: #f97316;
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --border: #e2e8f0;
+  --card: #ffffff;
+}
+
+.dark {
+  --primary: #3b82f6;
+  --accent: #fb923c;
+  --bg: #0f172a;
+  --text: #f8fafc;
+  --border: #1e293b;
+  --card: #1e293b;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text antialiased transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
+
+.nav-link {
+  @apply relative py-1 transition-all duration-300 hover:text-accent font-bold;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2 w-0 h-0.5 bg-accent transition-all duration-300 -translate-x-1/2;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.high-density-card {
+  @apply bg-card border border-border rounded-xl shadow-sm p-4;
+}
+
+.status-badge {
+  @apply px-2 py-0.5 rounded-full text-[11px] font-bold uppercase;
+}

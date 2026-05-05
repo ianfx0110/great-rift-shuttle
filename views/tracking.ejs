@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head', { title: 'Tracking' }) %>
+</head>
+<body class="bg-bg text-text font-sans antialiased">
+    <%- include('partials/nav') %>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="max-w-3xl mx-auto">
+         <div class="text-center mb-12">
+            <h1 class="text-3xl font-black text-primary mb-2 uppercase italic tracking-tight">Cargo Intelligence</h1>
+            <p class="text-xs text-slate-400 font-bold uppercase tracking-[3px]">Trace your consignment across the Rift corridor.</p>
+         </div>
+
+         <!-- Search Card -->
+         <div class="bg-card p-8 rounded-3xl border border-border shadow-2xl mb-12">
+            <form id="tracking-form" class="flex flex-col md:flex-row gap-4">
+               <div class="flex-1 relative">
+                  <i data-lucide="hash" class="absolute left-4 top-1/2 -translate-y-1/2 text-accent w-5 h-5"></i>
+                  <input type="text" id="track-number" placeholder="TRK-XXXXXXX" class="w-full bg-bg border border-border rounded-2xl pl-12 pr-6 py-4 text-sm font-black uppercase tracking-widest focus:ring-2 focus:ring-accent outline-none" required />
+               </div>
+               <button type="submit" class="bg-primary text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-900 shadow-xl shadow-blue-900/10 transition-all flex items-center justify-center">
+                  Secure Trace <i data-lucide="radar" class="ml-2 w-4 h-4"></i>
+               </button>
+            </form>
+         </div>
+
+         <!-- Results Area -->
+         <div id="tracking-results" class="hidden space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <!-- Consignment Header -->
+            <div class="bg-card p-8 rounded-3xl border border-border shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center">
+               <div>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-accent mb-2 block">Consignment Identity</span>
+                  <h2 class="text-2xl font-black text-primary italic uppercase tracking-tighter" id="res-number">...</h2>
+               </div>
+               <div class="mt-4 md:mt-0 text-right">
+                  <span class="px-4 py-1.5 rounded-full bg-blue-500/10 text-primary border border-blue-500/20 text-[10px] font-black uppercase tracking-widest" id="res-status">...</span>
+               </div>
+            </div>
+
+            <!-- Route Progress -->
+            <div class="bg-card p-8 rounded-3xl border border-border shadow-sm relative overflow-hidden">
+               <div class="absolute right-0 top-0 opacity-5 -translate-y-1/4 translate-x-1/4">
+                  <i data-lucide="package" class="w-64 h-64 text-primary"></i>
+               </div>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                  <div class="text-center md:text-left">
+                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Registry Point</p>
+                     <p class="text-lg font-black text-primary italic uppercase" id="res-origin">...</p>
+                  </div>
+                  <div class="flex items-center justify-center py-4 md:py-0">
+                     <div class="w-full h-px bg-border relative">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3">
+                           <i data-lucide="truck" class="w-5 h-5 text-accent animate-pulse"></i>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="text-center md:text-right">
+                     <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Destination Hub</p>
+                     <p class="text-lg font-black text-primary italic uppercase" id="res-dest">...</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Detailed Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+               <div class="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                  <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Payload Weight</p>
+                  <p class="text-lg font-black text-primary italic" id="res-weight">...</p>
+               </div>
+               <div class="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                  <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Fee Settlement</p>
+                  <p class="text-lg font-black text-success italic" id="res-payment">...</p>
+               </div>
+               <div class="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                  <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Dispatch Date</p>
+                  <p class="text-lg font-black text-primary italic" id="res-date">...</p>
+               </div>
+               <div class="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                  <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Description</p>
+                  <p class="text-[10px] font-bold text-slate-500 line-clamp-1" id="res-desc">...</p>
+               </div>
+            </div>
+         </div>
+
+         <!-- Loader & Feedback -->
+         <div id="tracking-feedback" class="hidden text-center py-20">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-accent mx-auto mb-6"></div>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Querying Cloud Logistics Servers...</p>
+         </div>
+      </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script type="module">
+      import { api, setupAuth } from '/src/main.js';
+      setupAuth();
+
+      const form = document.getElementById('tracking-form');
+      const input = document.getElementById('track-number');
+      const results = document.getElementById('tracking-results');
+      const feedback = document.getElementById('tracking-feedback');
+
+      async function trackParcel(number) {
+         results.classList.add('hidden');
+         feedback.classList.remove('hidden');
+
+         try {
+            const data = await api.get(`/api/parcels/track/${number}`);
+            
+            document.getElementById('res-number').textContent = data.tracking_number;
+            document.getElementById('res-status').textContent = data.tracking_status.replace('_', ' ');
+            document.getElementById('res-origin').textContent = data.origin_hub;
+            document.getElementById('res-dest').textContent = data.dest_hub;
+            document.getElementById('res-weight').textContent = `${data.weight_kg} KG`;
+            document.getElementById('res-payment').textContent = data.payment_status.toUpperCase();
+            document.getElementById('res-date').textContent = new Date(data.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            document.getElementById('res-desc').textContent = data.description || 'General Merchandise';
+
+            feedback.classList.add('hidden');
+            results.classList.remove('hidden');
+         } catch (error) {
+            feedback.classList.add('hidden');
+            alert('Trace failed: ' + error.message);
+         }
+      }
+
+      form.onsubmit = (e) => {
+         e.preventDefault();
+         trackParcel(input.value);
+      };
+
+      // Check URL for pre-filled tracking
+      const params = new URLSearchParams(window.location.search);
+      const prefilled = params.get('number');
+      if (prefilled) {
+         input.value = prefilled;
+         trackParcel(prefilled);
+      }
+    </script>
+</body>
+</html>
