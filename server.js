@@ -45,6 +45,7 @@ async function startServer() {
   app.use(cors());
   app.use(express.json());
   app.use(cookieParser());
+  app.use(express.static('public'));
 
   // Page Routes with Server-Side Data Fetching (Student Format Style)
   app.get('/', (req, res) => {
