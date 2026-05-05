@@ -57,14 +57,29 @@
 
           <div class="flex flex-col gap-1.5">
             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Password</label>
-            <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">Create a password</p>
-            <input type="password" id="reg-password" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all"/>
+            <div class="relative">
+              <input type="password" id="reg-password" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all pr-12"/>
+              <button type="button" data-toggle="reg-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-accent transition-colors pw-toggle">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
           <div class="flex flex-col gap-1.5">
             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm Password</label>
-            <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">Confirm your password</p>
-            <input type="password" id="reg-confirm" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all"/>
+            <div class="relative">
+              <input type="password" id="reg-confirm" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all pr-12"/>
+              <button type="button" data-toggle="reg-confirm" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-accent transition-colors pw-toggle">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center mt-4 mb-2">
+            <label class="flex items-center gap-2 cursor-pointer group">
+              <input type="checkbox" id="reg-remember" class="w-4 h-4 rounded border-border text-accent focus:ring-accent accent-accent cursor-pointer"/>
+              <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Store Session Token</span>
+            </label>
           </div>
 
           <button type="submit" class="w-full bg-primary text-white font-black py-4 rounded-xl hover:bg-blue-900 transition-all shadow-xl shadow-blue-900/10 mt-6 text-sm uppercase tracking-widest italic translate-y-0 active:translate-y-1">
@@ -82,6 +97,17 @@
       import { api } from '/src/main.js';
       lucide.createIcons();
 
+      // Password Toggle
+      document.querySelectorAll('.pw-toggle').forEach(btn => {
+        btn.onclick = () => {
+          const target = document.getElementById(btn.dataset.toggle);
+          const isPw = target.type === 'password';
+          target.type = isPw ? 'text' : 'password';
+          btn.innerHTML = isPw ? '<i data-lucide="eye-off" class="w-4 h-4"></i>' : '<i data-lucide="eye" class="w-4 h-4"></i>';
+          lucide.createIcons();
+        };
+      });
+
       document.getElementById('signup-form').onsubmit = async (e) => {
         e.preventDefault();
         try {
@@ -89,8 +115,14 @@
             name: document.getElementById('reg-name').value,
             phone: document.getElementById('reg-phone').value,
             email: document.getElementById('reg-email').value,
-            password: document.getElementById('reg-password').value
+            password: document.getElementById('reg-password').value,
+            rememberMe: document.getElementById('reg-remember').checked
           });
+          
+          if (document.getElementById('reg-remember').checked) {
+            localStorage.setItem('rememberedEmail', document.getElementById('reg-email').value);
+          }
+
           localStorage.setItem('user', JSON.stringify(res.user));
           window.location.href = '/dashboard';
         } catch (error) {

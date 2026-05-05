@@ -46,9 +46,21 @@
             </div>
             <div class="flex flex-col gap-1.5">
               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Password</label>
-              <p class="text-[8px] font-bold text-slate-400 uppercase mb-1">Create a password</p>
-              <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all"/>
+              <div class="relative">
+                <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all pr-12"/>
+                <button type="button" id="toggle-pw" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-accent transition-colors">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+              </div>
             </div>
+            <div class="flex items-center justify-between mt-4 mb-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" id="login-remember" class="w-4 h-4 rounded border-border text-accent focus:ring-accent accent-accent cursor-pointer"/>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Remember Manifest</span>
+              </label>
+              <a href="#" class="text-[10px] font-black text-accent uppercase tracking-widest hover:underline">Lost Protocol?</a>
+            </div>
+
             <button type="submit" class="w-full bg-primary text-white font-black py-4 rounded-xl hover:bg-blue-900 transition-all shadow-xl shadow-blue-900/10 mt-6 text-sm uppercase tracking-widest italic translate-y-0 active:translate-y-1">
               Log In
             </button>
@@ -65,13 +77,38 @@
       import { api } from '/src/main.js';
       lucide.createIcons();
 
+      // Check for remembered email
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      if (rememberedEmail) {
+        document.getElementById('login-email').value = rememberedEmail;
+        document.getElementById('login-remember').checked = true;
+      }
+
+      // Password Toggle
+      const pwInput = document.getElementById('login-password');
+      const toggleBtn = document.getElementById('toggle-pw');
+      toggleBtn.onclick = () => {
+        const isPw = pwInput.type === 'password';
+        pwInput.type = isPw ? 'text' : 'password';
+        toggleBtn.innerHTML = isPw ? '<i data-lucide="eye-off" class="w-4 h-4"></i>' : '<i data-lucide="eye" class="w-4 h-4"></i>';
+        lucide.createIcons();
+      };
+
       document.getElementById('login-form').onsubmit = async (e) => {
         e.preventDefault();
         try {
           const res = await api.post('/api/auth/login', {
             email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value
+            password: document.getElementById('login-password').value,
+            rememberMe: document.getElementById('login-remember').checked
           });
+          
+          if (document.getElementById('login-remember').checked) {
+            localStorage.setItem('rememberedEmail', document.getElementById('login-email').value);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
+
           localStorage.setItem('user', JSON.stringify(res.user));
           window.location.href = '/dashboard';
         } catch (error) {

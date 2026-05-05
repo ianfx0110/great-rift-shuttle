@@ -49,21 +49,22 @@
   </div>
 
   <!-- Mobile Menu Overlay -->
-  <div id="mobile-menu" class="fixed inset-0 bg-card z-[60] transform translate-x-full transition-transform duration-300 md:hidden">
+  <div id="mobile-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] hidden transition-opacity duration-300"></div>
+  <div id="mobile-menu" class="fixed inset-0 bg-card z-[60] transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
     <div class="flex flex-col h-full">
       <div class="flex justify-between items-center h-16 px-6 border-b border-border">
-        <span class="text-lg font-black text-primary uppercase italic">Menu</span>
-        <button id="mobile-menu-close" class="p-2 text-primary">
-          <i data-lucide="x" class="w-6 h-6"></i>
+        <span class="text-lg font-black text-primary uppercase italic">Hub Terminal</span>
+        <button id="mobile-menu-close" class="p-2 text-primary hover:text-accent transition-colors">
+          <i data-lucide="x" class="w-7 h-7"></i>
         </button>
       </div>
       <div class="flex-1 overflow-y-auto py-8 px-6 space-y-8">
-        <a href="/" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Home</a>
-        <a href="/booking" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Book Trip</a>
-        <a href="/routes" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Routes</a>
-        <a href="/parcel" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Parcels</a>
-        <a href="/tracking" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Track Cargo</a>
-        <a href="/contact" class="block text-3xl font-black text-primary uppercase tracking-tighter italic">Support</a>
+        <a href="/" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all">Home</a>
+        <a href="/booking" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all">Book Trip</a>
+        <a href="/routes" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all">Routes</a>
+        <a href="/parcel" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all">Parcels</a>
+        <a href="/tracking" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all">Track Cargo</a>
+        <a href="/contact" class="block text-3xl font-black text-primary uppercase tracking-tighter italic hover:text-accent transition-all border-b-2 border-accent pb-2">Support</a>
         <hr class="border-border"/>
         <div id="mobile-auth-section">
           <a href="/login" class="block w-full bg-primary text-white text-center py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-xl shadow-primary/20">Login / Register</a>
@@ -75,7 +76,7 @@
       </div>
       <div class="p-6 border-t border-border bg-bg">
          <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">&copy; 2026 Great Rift Shuttle</p>
-         <p class="text-[8px] font-bold text-gray-400">Paving the rift with excellence.</p>
+         <p class="text-[8px] font-bold text-gray-400">Digitizing the Rift corridor.</p>
       </div>
     </div>
   </div>
@@ -83,7 +84,34 @@
 <div class="h-16"></div> <!-- Spacer for fixed nav -->
 
 <script>
-  function setupTheme() {
+  function setupNavigation() {
+    const mobileMenuOpen = document.getElementById('mobile-menu-open');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+    
+    function toggleMenu(isOpen) {
+      if (isOpen) {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileBackdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.add('translate-x-full');
+        mobileBackdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuOpen.onclick = () => toggleMenu(true);
+    mobileMenuClose.onclick = () => toggleMenu(false);
+    mobileBackdrop.onclick = () => toggleMenu(false);
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.onclick = () => toggleMenu(false);
+    });
+
+    // Theme support
     const sunIcon = document.getElementById('sun-icon');
     const moonIcon = document.getElementById('moon-icon');
     const themeToggle = document.getElementById('theme-toggle');
@@ -120,5 +148,5 @@
   }
 
   // Run on load
-  document.addEventListener('DOMContentLoaded', setupTheme);
+  document.addEventListener('DOMContentLoaded', setupNavigation);
 </script>
