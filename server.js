@@ -9,72 +9,55 @@ import fs from 'fs';
 
 const { Pool } = pkg;
 
-const app = express();
-const PORT = 3000;
+async function startServer() {
+  const app = express();
+  const PORT = 3000;
 
-// Configuration Constants
-const CONFIG = {
-  DATABASE_URL: "postgres://user:password@localhost:5432/dbname",
-  MPESA_CONSUMER_KEY: "",
-  MPESA_CONSUMER_SECRET: "",
-  MPESA_SHORTCODE: "",
-  MPESA_PASSKEY: "",
-  MPESA_CALLBACK_URL: ""
-};
+  // Configuration Constants
+  const CONFIG = {
+    DATABASE_URL: "postgres://user:password@localhost:5432/dbname",
+    MPESA_CONSUMER_KEY: "",
+    MPESA_CONSUMER_SECRET: "",
+    MPESA_SHORTCODE: "",
+    MPESA_PASSKEY: "",
+    MPESA_CALLBACK_URL: ""
+  };
 
-// Initialize Database
-const pool = new Pool({
-  connectionString: CONFIG.DATABASE_URL,
-  ssl: CONFIG.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false }
-});
+  // Initialize Database
+  const pool = new Pool({
+    connectionString: CONFIG.DATABASE_URL,
+    ssl: CONFIG.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false }
+  });
 
-const query = (text, params) => pool.query(text, params);
+  const query = (text, params) => pool.query(text, params);
 
-const initDb = async () => {
-  if (!CONFIG.DATABASE_URL) {
-    console.warn('DATABASE_URL not found. Database features will not work until configured.');
-    return;
-  }
-  try {
-    const schemaPath = path.join(process.cwd(), 'schema.sql');
-    if (fs.existsSync(schemaPath)) {
+  const initDb = async () => {
+    if (!CONFIG.DATABASE_URL) {
+      console.warn('DATABASE_URL not found. Database features will not work until configured.');
+      return;
+    }
+    try {
+      const schemaPath = path.join(process.cwd(), 'schema.sql');
       const sql = fs.readFileSync(schemaPath, 'utf8');
       await query(sql);
       console.log('Great Rift Shuttle Database (PostgreSQL) initialized successfully.');
+    } catch (error) {
+      console.error('Failed to initialize PostgreSQL DB:', error);
     }
-  } catch (error) {
-    console.error('Failed to initialize PostgreSQL DB:', error);
-  }
-};
+  };
 
-// Start DB Initialization
-initDb();
+  await initDb();
 
-// View Engine Setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(process.cwd(), 'views'));
+  // View Engine Setup
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(process.cwd(), 'views'));
 
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
+  app.use(cors());
+  app.use(express.json());
+  app.use(cookieParser());
+  app.use(express.static('public'));
 
-// Serve static assets from root folders
-app.use('/css', express.static(path.join(process.cwd(), 'css')));
-app.use('/images', express.static(path.join(process.cwd(), 'images')));
-app.use('/src', express.static(path.join(process.cwd(), 'src')));
-
-// Route for serving root HTML files
-app.get('/:page.html', (req, res, next) => {
-  const page = req.params.page;
-  const filePath = path.join(process.cwd(), `${page}.html`);
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    next();
-  }
-});
-
-// Page Routes with Server-Side Data Fetching (Student Format Style)
+  // Page Routes with Server-Side Data Fetching (Student Format Style)
   app.get('/', (req, res) => {
     pool.query('SELECT * FROM routes LIMIT 3', (err, result) => {
       const recommendedRoutes = err ? [] : result.rows;
@@ -558,15 +541,14 @@ app.get('/:page.html', (req, res, next) => {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-  });
-}
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
 
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
-export default app;
+startServer();

@@ -19,20 +19,20 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Full Name</label>
-                        <input type="text" id="reg-name" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="Jane Doe">
+                        <input type="text" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="Jane Doe">
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Phone Number</label>
-                        <input type="tel" id="reg-phone" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="0712 345 678">
+                        <input type="tel" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="0712 345 678">
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Email Address</label>
-                    <input type="email" id="reg-email" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="jane@dispatch.co.ke">
+                    <input type="email" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="jane@dispatch.co.ke">
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <label style="font-size: 0.75rem; font-weight: 900; color: grey; text-transform: uppercase;">Password</label>
-                    <input type="password" id="reg-password" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="Create strong password">
+                    <input type="password" style="padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--border); outline: none;" placeholder="Create strong password">
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
                     <input type="checkbox" id="reg-remember" style="width: 1rem; height: 1rem; cursor: pointer;">
@@ -47,26 +47,13 @@
         </div>
     </main>
 
-    <script type="module">
-        import { api } from '/src/main.js';
+    <script>
         lucide.createIcons();
-        document.querySelector('form').onsubmit = async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('reg-name').value;
-            const phone = document.getElementById('reg-phone').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
+        document.querySelector('form').onsubmit = (e) => {
+            const email = document.querySelector('input[type="email"]').value;
             const remember = document.getElementById('reg-remember').checked;
-
-            try {
-                const res = await api.post('/api/auth/register', { name, email, password, phone });
-                if (remember) {
-                    localStorage.setItem('rememberedEmail', email);
-                }
-                localStorage.setItem('user', JSON.stringify(res.user));
-                window.location.href = '/dashboard.html';
-            } catch (error) {
-                alert('Enrollment Failed: ' + error.message);
+            if (remember) {
+                localStorage.setItem('rememberedEmail', email);
             }
         };
     </script>

@@ -37,13 +37,11 @@
         </div>
     </main>
 
-    <script type="module">
-        import { api } from '/src/main.js';
+    <script>
         lucide.createIcons();
         
         // Initial setup
         const emailInput = document.querySelector('input[type="email"]');
-        const passwordInput = document.getElementById('login-password');
         const rememberCheckbox = document.getElementById('login-remember');
         
         const rememberedEmail = localStorage.getItem('rememberedEmail');
@@ -52,25 +50,12 @@
             rememberCheckbox.checked = true;
         }
 
-        document.querySelector('form').onsubmit = async (e) => {
-            e.preventDefault();
-            try {
-                const res = await api.post('/api/auth/login', {
-                    email: emailInput.value,
-                    password: passwordInput.value,
-                    rememberMe: rememberCheckbox.checked
-                });
-                
-                if (rememberCheckbox.checked) {
-                    localStorage.setItem('rememberedEmail', emailInput.value);
-                } else {
-                    localStorage.removeItem('rememberedEmail');
-                }
-
-                localStorage.setItem('user', JSON.stringify(res.user));
-                window.location.href = res.user.role === 'admin' ? '/admin.html' : '/dashboard.html';
-            } catch (error) {
-                alert('Access Denied: ' + error.message);
+        document.querySelector('form').onsubmit = (e) => {
+            // Static demo behavior matching user request for public files
+            if (rememberCheckbox.checked) {
+                localStorage.setItem('rememberedEmail', emailInput.value);
+            } else {
+                localStorage.removeItem('rememberedEmail');
             }
         };
     </script>
