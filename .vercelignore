@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.vercel
+package-lock.json
+schema.sql
+README.md
+metadata.json
+config.js
+src
+views

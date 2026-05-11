@@ -9,45 +9,72 @@ import fs from 'fs';
 
 const { Pool } = pkg;
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+const app = express();
+const PORT = 3000;
 
-  // Initialize Database
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false }
-  });
+// Configuration Constants
+const CONFIG = {
+  DATABASE_URL: "postgres://user:password@localhost:5432/dbname",
+  MPESA_CONSUMER_KEY: "",
+  MPESA_CONSUMER_SECRET: "",
+  MPESA_SHORTCODE: "",
+  MPESA_PASSKEY: "",
+  MPESA_CALLBACK_URL: ""
+};
 
-  const query = (text, params) => pool.query(text, params);
+// Initialize Database
+const pool = new Pool({
+  connectionString: CONFIG.DATABASE_URL,
+  ssl: CONFIG.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false }
+});
 
-  const initDb = async () => {
-    if (!process.env.DATABASE_URL) {
-      console.warn('DATABASE_URL not found. Database features will not work until configured.');
-      return;
-    }
-    try {
-      const schemaPath = path.join(process.cwd(), 'schema.sql');
+const query = (text, params) => pool.query(text, params);
+
+const initDb = async () => {
+  if (!CONFIG.DATABASE_URL) {
+    console.warn('DATABASE_URL not found. Database features will not work until configured.');
+    return;
+  }
+  try {
+    const schemaPath = path.join(process.cwd(), 'schema.sql');
+    if (fs.existsSync(schemaPath)) {
       const sql = fs.readFileSync(schemaPath, 'utf8');
       await query(sql);
       console.log('Great Rift Shuttle Database (PostgreSQL) initialized successfully.');
-    } catch (error) {
-      console.error('Failed to initialize PostgreSQL DB:', error);
     }
-  };
+  } catch (error) {
+    console.error('Failed to initialize PostgreSQL DB:', error);
+  }
+};
 
-  await initDb();
+// Start DB Initialization
+initDb();
 
-  // View Engine Setup
-  app.set('view engine', 'ejs');
-  app.set('views', path.join(process.cwd(), 'views'));
+// View Engine Setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(process.cwd(), 'views'));
 
-  app.use(cors());
-  app.use(express.json());
-  app.use(cookieParser());
-  app.use(express.static('public'));
+app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
 
-  // Page Routes with Server-Side Data Fetching (Student Format Style)
+// Serve static assets from root folders
+app.use('/css', express.static(path.join(process.cwd(), 'css')));
+app.use('/images', express.static(path.join(process.cwd(), 'images')));
+app.use('/src', express.static(path.join(process.cwd(), 'src')));
+
+// Route for serving root HTML files
+app.get('/:page.html', (req, res, next) => {
+  const page = req.params.page;
+  const filePath = path.join(process.cwd(), `${page}.html`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    next();
+  }
+});
+
+// Page Routes with Server-Side Data Fetching (Student Format Style)
   app.get('/', (req, res) => {
     pool.query('SELECT * FROM routes LIMIT 3', (err, result) => {
       const recommendedRoutes = err ? [] : result.rows;
@@ -152,8 +179,8 @@ async function startServer() {
 
   // Safaricom M-Pesa Integration helpers
   const getMpesaToken = async () => {
-    const key = process.env.MPESA_CONSUMER_KEY;
-    const secret = process.env.MPESA_CONSUMER_SECRET;
+    const key = CONFIG.MPESA_CONSUMER_KEY;
+    const secret = CONFIG.MPESA_CONSUMER_SECRET;
     if (!key || !secret) return null;
     
     const auth = Buffer.from(`${key}:${secret}`).toString('base64');
@@ -172,9 +199,9 @@ async function startServer() {
     const token = await getMpesaToken();
     if (!token) throw new Error('Failed to get Mpesa token');
 
-    const shortcode = process.env.MPESA_SHORTCODE;
-    const passkey = process.env.MPESA_PASSKEY;
-    const callbackUrl = process.env.MPESA_CALLBACK_URL;
+    const shortcode = CONFIG.MPESA_SHORTCODE;
+    const passkey = CONFIG.MPESA_PASSKEY;
+    const callbackUrl = CONFIG.MPESA_CALLBACK_URL;
     const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
     const password = Buffer.from(shortcode + passkey + timestamp).toString('base64');
 
@@ -531,14 +558,15 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
-  }
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
-startServer();
+export default app;

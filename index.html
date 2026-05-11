@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Rift Shuttle | Premium Regional Travel</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+        }
+        .route-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        .route-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body>
+    <header class="container" style="padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center;">
+        <h1 class="font-black italic text-primary" style="margin: 0;">GREAT RIFT</h1>
+        <nav style="display: flex; gap: 1.5rem; align-items: center;">
+            <a href="/" class="font-black uppercase" style="color: var(--accent); text-decoration: none; font-size: 0.75rem;">Home</a>
+            <a href="/about.html" class="font-black uppercase" style="color: var(--text); text-decoration: none; font-size: 0.75rem;">About</a>
+            <a href="/routes.html" class="font-black uppercase" style="color: var(--text); text-decoration: none; font-size: 0.75rem;">Routes</a>
+            <a href="/parcel.html" class="font-black uppercase" style="color: var(--text); text-decoration: none; font-size: 0.75rem;">Parcels</a>
+            <a href="/login.html" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.75rem;">Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2 style="font-size: 4rem; font-weight: 900; margin-bottom: 1.5rem; line-height: 1.1; font-style: italic;">PREMIUM TRAVEL <br>REDEFINED</h2>
+            <p style="font-size: 1.25rem; font-weight: 500; opacity: 0.9; max-width: 600px; margin: 0 auto 3rem;">Kenya's most punctual shuttle network connecting strategic urban hubs with absolute security.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="/booking.html" class="btn btn-accent" style="padding: 1.25rem 2.5rem;">Secure Seat</a>
+                <a href="/parcel.html" class="btn" style="background: white; color: var(--primary); padding: 1.25rem 2.5rem;">Dispatch Cargo</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container" style="padding: 6rem 0;">
+        <div class="text-center" style="margin-bottom: 4rem;">
+            <span class="text-accent font-black uppercase" style="letter-spacing: 0.3em; font-size: 0.6rem;">Connectivity Nodes</span>
+            <h2 class="font-black uppercase italic" style="font-size: 2.5rem; margin-top: 0.5rem;">Recommended Routes</h2>
+        </div>
+
+        <div id="routes-container">
+            <!-- Routes will be loaded here or placeholder -->
+            <div class="route-card">
+                <div>
+                   <h3 class="font-black italic uppercase text-primary">NAIROBI → NAKURU</h3>
+                   <p style="font-size: 0.75rem; color: grey; font-weight: 700; margin-top: 0.25rem;">3H EXPRESS SERVICE</p>
+                </div>
+                <div class="text-center">
+                   <p style="font-size: 0.6rem; font-weight: 900; color: grey; margin-bottom: 0.25rem;">FROM</p>
+                   <p class="font-black italic text-primary" style="font-size: 1.5rem;">KES 800</p>
+                </div>
+                <a href="/booking.html" class="btn btn-primary" style="border-radius: 1rem; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+
+             <div class="route-card">
+                <div>
+                   <h3 class="font-black italic uppercase text-primary">NAIROBI → ELDORET</h3>
+                   <p style="font-size: 0.75rem; color: grey; font-weight: 700; margin-top: 0.25rem;">6H CORRIDOR SHIFT</p>
+                </div>
+                <div class="text-center">
+                   <p style="font-size: 0.6rem; font-weight: 900; color: grey; margin-bottom: 0.25rem;">FROM</p>
+                   <p class="font-black italic text-primary" style="font-size: 1.5rem;">KES 1,500</p>
+                </div>
+                <a href="/booking.html" class="btn btn-primary" style="border-radius: 1rem; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <section style="background: var(--primary); padding: 8rem 0; color: white;">
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div>
+                <h2 class="font-black italic" style="font-size: 3rem; line-height: 1.1; margin-bottom: 2rem;">ELITE TRANSPORT <br>INFRASTRUCTURE</h2>
+                <p style="font-size: 1.125rem; font-weight: 500; opacity: 0.8; margin-bottom: 3rem;">We don't just move passengers; we manage a high-precision logistics ecosystem designed for safety.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <p class="font-black italic" style="font-size: 2.5rem; color: var(--accent);">99.8%</p>
+                        <p style="font-size: 0.75rem; font-weight: 900; opacity: 0.6; text-transform: uppercase;">Punctuality Score</p>
+                    </div>
+                    <div>
+                        <p class="font-black italic" style="font-size: 2.5rem; color: var(--accent);">24/7</p>
+                        <p style="font-size: 0.75rem; font-weight: 900; opacity: 0.6; text-transform: uppercase;">Live Surveillance</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=800" style="width: 100%; border-radius: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);" alt="Operations">
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center" style="padding: 4rem 0; background: var(--bg); border-top: 1px solid var(--border);">
+        <p class="font-black uppercase italic text-primary" style="margin-bottom: 1rem;">Great Rift Shuttle</p>
+        <p style="font-size: 0.75rem; color: grey;">&copy; 2026 Great Rift Logistics Group. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+    <script>
+        // lucide is initialized in main.js but also here for immediate static rendering
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+</html>
