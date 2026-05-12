@@ -3,7 +3,7 @@ const path = require("path");
 const app = express();
 console.log(__dirname);
 
-app.use(express.static("public")); // direct server to redirect any statci files(js,css,images) requests to the public folder
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
@@ -32,4 +32,4 @@ app.get("/register/driver", (req, res) => {
 // get routes are for loading pages
 
 //start the app
-app.listen(3001, () => console.log("Server running on PORT 3001"));
+app.listen(3000, () => console.log("Server running on PORT 3000"));

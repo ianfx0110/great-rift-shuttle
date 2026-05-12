@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register — Great Rift Shuttle</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .auth-container { max-width: 450px; margin: 4rem auto; }
+    .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .tab-btn { flex: 1; padding: 1rem; text-align: center; cursor: pointer; font-weight: 700; color: var(--text-muted); }
+    .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <main class="container">
+    <div class="auth-container">
+      <div class="card">
+        <div class="tabs">
+          <div class="tab-btn active" onclick="switchTab('login')">Log In</div>
+          <div class="tab-btn" onclick="switchTab('register')">Register</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form active">
+          <form onsubmit="handleLogin(event)">
+            <div class="form-group mb-4">
+              <label class="text-sm font-bold block mb-1">Email or Phone</label>
+              <input type="text" name="email" class="input-field" required>
+            </div>
+            <div class="form-group mb-6">
+              <div class="flex justify-between">
+                <label class="text-sm font-bold block mb-1">Password</label>
+                <a href="#" class="text-xs text-primary">Forgot Password?</a>
+              </div>
+              <input type="password" name="password" class="input-field" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-full h-12 uppercase">Access My Account</button>
+          </form>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="auth-form">
+          <form onsubmit="handleRegister(event)">
+            <div class="grid grid-2 gap-4 mb-4">
+              <div class="form-group">
+                <label class="text-sm font-bold block mb-1">First Name</label>
+                <input type="text" name="first_name" class="input-field" required>
+              </div>
+              <div class="form-group">
+                <label class="text-sm font-bold block mb-1">Last Name</label>
+                <input type="text" name="last_name" class="input-field" required>
+              </div>
+            </div>
+            <div class="form-group mb-4">
+              <label class="text-sm font-bold block mb-1">Email Address</label>
+              <input type="email" name="email" class="input-field" required>
+            </div>
+            <div class="form-group mb-4">
+              <label class="text-sm font-bold block mb-1">Phone Number (07XX...)</label>
+              <input type="tel" name="phone" class="input-field" required>
+            </div>
+            <div class="form-group mb-6">
+              <label class="text-sm font-bold block mb-1">Password</label>
+              <input type="password" name="password" class="input-field" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-full h-12 uppercase">Create Account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/main.js"></script>
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      
+      if (tab === 'login') {
+        document.querySelector('.tab-btn:first-child').classList.add('active');
+        document.getElementById('login-form').classList.add('active');
+      } else {
+        document.querySelector('.tab-btn:last-child').classList.add('active');
+        document.getElementById('register-form').classList.add('active');
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (res.ok) {
+        window.location.href = '/account.html';
+      } else {
+        const error = await res.json();
+        alert(error.error || 'Login failed');
+      }
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (res.ok) {
+        alert('Account created! Please log in.');
+        switchTab('login');
+      } else {
+        const error = await res.json();
+        alert(error.error || 'Registration failed');
+      }
+    }
+  </script>
+</body>
+</html>

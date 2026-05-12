@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Great Rift Shuttle</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-method { display: flex; gap: 1rem; margin-bottom: 2rem; }
+    .icon-box { width: 48px; height: 48px; background: var(--surface-alt); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.25rem; }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <main class="py-12">
+    <div class="container">
+      <section class="max-w-3xl mb-16">
+        <h1 class="text-4xl mb-4">Get in Touch</h1>
+        <p class="text-xl text-muted">We're here to help. Reach out for bookings, parcel inquiries, or corporate partnerships.</p>
+      </section>
+
+      <div class="contact-grid">
+        <aside>
+          <div class="contact-method">
+            <div class="icon-box">📍</div>
+            <div>
+              <h3 class="text-sm">Main Office</h3>
+              <p class="text-muted text-sm">Great Rift Plaza, Uganda Road, Eldoret, Kenya</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="icon-box">📞</div>
+            <div>
+              <h3 class="text-sm">Customer Support</h3>
+              <p class="text-muted text-sm">+254 700 000 000</p>
+              <p class="text-muted text-sm">+254 711 000 000</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="icon-box">✉️</div>
+            <div>
+              <h3 class="text-sm">Email Inquiries</h3>
+              <p class="text-muted text-sm">info@greatriftshuttle.co.ke</p>
+              <p class="text-muted text-sm">support@greatriftshuttle.co.ke</p>
+            </div>
+          </div>
+          
+          <div class="mt-12">
+            <h3 class="mb-4">Follow Us</h3>
+            <div class="flex gap-4">
+              <!-- Icons -->
+              <span class="text-muted">Facebook</span>
+              <span class="text-muted">Twitter</span>
+              <span class="text-muted">Instagram</span>
+            </div>
+          </div>
+        </aside>
+
+        <section class="card p-8">
+          <form onsubmit="event.preventDefault(); alert('Message sent! We will get back to you shortly.');">
+            <div class="grid grid-2 gap-4 mb-4">
+              <div class="form-group">
+                <label class="text-xs font-bold uppercase tracking-widest text-muted block mb-1">Full Name</label>
+                <input type="text" class="input-field" required>
+              </div>
+              <div class="form-group">
+                <label class="text-xs font-bold uppercase tracking-widest text-muted block mb-1">Email Address</label>
+                <input type="email" class="input-field" required>
+              </div>
+            </div>
+            <div class="form-group mb-4">
+              <label class="text-xs font-bold uppercase tracking-widest text-muted block mb-1">Subject</label>
+              <select class="input-field">
+                <option>Booking Inquiry</option>
+                <option>Parcel Status</option>
+                <option>Corporate Branding</option>
+                <option>Complaints / Feedback</option>
+              </select>
+            </div>
+            <div class="form-group mb-6">
+              <label class="text-xs font-bold uppercase tracking-widest text-muted block mb-1">Message</label>
+              <textarea class="input-field" style="height: 150px; padding: 1rem;" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-full h-12 uppercase">Send Message</button>
+          </form>
+        </section>
+      </div>
+
+      <section class="mt-20">
+        <h2 class="mb-8">Find Our Offices</h2>
+        <div class="card p-4" style="height: 400px; background: var(--surface-alt); display: flex; align-items: center; justify-content: center;">
+          <p class="text-muted">Interactive Map of Our 30+ Hubs Across Kenya</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — Great Rift Shuttle</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .account-layout { display: grid; grid-template-columns: 240px 1fr; gap: 4rem; }
+    @media (max-width: 900px) { .account-layout { grid-template-columns: 1fr; gap: 2rem; } }
+    .side-nav { position: sticky; top: 120px; }
+    .side-link { display: block; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .side-link:hover, .side-link.active { background: var(--surface-alt); color: var(--primary); }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <main class="py-12">
+    <div class="container">
+      <div class="account-layout">
+        <aside class="side-nav">
+          <a href="/account.html" class="side-link active">Profile Overview</a>
+          <a href="/history.html" class="side-link">My Bookings</a>
+          <a href="/parcel-history.html" class="side-link">My Parcels</a>
+          <a href="/notifications.html" class="side-link">Notifications <span class="badge badge-info ml-2">2</span></a>
+          <a href="/settings.html" class="side-link">Settings</a>
+          <hr class="my-4 border-border">
+          <button onclick="handleLogout()" class="side-link text-error w-full text-left" style="color: #e74c3c">Log Out</button>
+        </aside>
+
+        <section class="account-content">
+          <div class="mb-12">
+            <h1 class="text-3xl mb-2">Hello, <span id="user-name">Traveler</span></h1>
+            <p class="text-muted">Welcome to your Great Rift Shuttle account.</p>
+          </div>
+
+          <div class="grid grid-2 gap-6 mb-12">
+            <div class="card p-6 flex align-center gap-6">
+                <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center text-2xl">🚌</div>
+                <div>
+                    <h3 class="text-sm uppercase text-muted tracking-widest font-bold">Total Trips</h3>
+                    <p class="text-3xl font-bold">12</p>
+                </div>
+            </div>
+            <div class="card p-6 flex align-center gap-6">
+                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-2xl">📦</div>
+                <div>
+                    <h3 class="text-sm uppercase text-muted tracking-widest font-bold">Parcels Sent</h3>
+                    <p class="text-3xl font-bold">5</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="card p-8">
+            <h2 class="text-xl mb-6">Profile Details</h2>
+            <div class="grid grid-2 gap-8 mb-8">
+                <div>
+                    <p class="text-xs font-bold text-muted uppercase mb-1">Full Name</p>
+                    <p id="full-name" class="font-medium">---</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-muted uppercase mb-1">Email Address</p>
+                    <p id="email" class="font-medium">---</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-muted uppercase mb-1">Phone Number</p>
+                    <p id="phone" class="font-medium">---</p>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-muted uppercase mb-1">Member Since</p>
+                    <p class="font-medium">Oct 2023</p>
+                </div>
+            </div>
+            <button class="btn btn-outline btn-sm">Edit Profile</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/main.js"></script>
+  <script>
+    async function initAccount() {
+      const res = await fetch('/api/auth/me');
+      if (!res.ok) {
+         window.location.href = '/auth.html';
+         return;
+      }
+      const user = await res.json();
+      document.getElementById('user-name').innerText = user.first_name;
+      document.getElementById('full-name').innerText = `${user.first_name} ${user.last_name}`;
+      document.getElementById('email').innerText = user.email;
+      document.getElementById('phone').innerText = user.phone;
+    }
+
+    async function handleLogout() {
+       // Typically a POST to /api/auth/logout or clear local state
+       document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+       window.location.href = '/';
+    }
+
+    initAccount();
+  </script>
+</body>
+</html>

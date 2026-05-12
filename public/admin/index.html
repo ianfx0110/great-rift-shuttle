@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Great Rift Shuttle</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .admin-layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 260px; background: var(--primary-dark); color: white; padding: 2rem 0; }
+    .sidebar-link { display: flex; align-items: center; padding: 0.75rem 2rem; color: rgba(255,255,255,0.7); gap: 1rem; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.1); color: white; }
+    .admin-content { flex: 1; padding: 2rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .stat-card { background: white; padding: 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="px-8 mb-8">
+        <h2 class="text-white">Admin Panel</h2>
+      </div>
+      <nav>
+        <a href="#overview" class="sidebar-link active">Overview</a>
+        <a href="#bookings" class="sidebar-link">Bookings</a>
+        <a href="#parcels" class="sidebar-link">Parcels</a>
+        <a href="#routes" class="sidebar-link">Routes</a>
+        <a href="#users" class="sidebar-link">Users</a>
+      </nav>
+    </aside>
+
+    <main class="admin-content">
+      <header class="flex justify-between align-center mb-8">
+        <h1>Dashboard Overview</h1>
+        <div class="admin-profile">Admin User</div>
+      </header>
+
+      <section class="stats-grid mb-12">
+        <div class="stat-card">
+          <p class="text-muted text-sm">Revenue Today</p>
+          <p class="text-2xl font-bold">KES 45,200</p>
+        </div>
+        <div class="stat-card">
+          <p class="text-muted text-sm">Total Bookings</p>
+          <p class="text-2xl font-bold">128</p>
+        </div>
+        <div class="stat-card">
+          <p class="text-muted text-sm">Active Parcels</p>
+          <p class="text-2xl font-bold">54</p>
+        </div>
+        <div class="stat-card">
+          <p class="text-muted text-sm">Active Trips</p>
+          <p class="text-2xl font-bold">12</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Recent Bookings</h3>
+        <table class="w-full mt-4" style="border-collapse: collapse;">
+          <thead>
+            <tr style="text-align: left; border-bottom: 1px solid var(--border);">
+              <th class="py-2">Code</th>
+              <th>Customer</th>
+              <th>Route</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td class="py-4">GR-28V9</td>
+              <td>John Doe</td>
+              <td>Nairobi - Eldoret</td>
+              <td><span class="badge badge-success">Confirmed</span></td>
+              <td>1,500</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Shipment — Great Rift Shuttle</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .tracking-results { margin-top: 2rem; display: none; }
+    .step { display: flex; gap: 1rem; margin-bottom: 2rem; position: relative; }
+    .step::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 30px;
+      width: 2px;
+      height: calc(100% - 10px);
+      background: var(--border);
+    }
+    .step:last-child::before { display: none; }
+    .step-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .step.active .step-icon { background: var(--accent); }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <main class="py-12">
+    <div class="container" style="max-width: 600px;">
+      <div class="card text-center">
+        <h2>Track Your Shipment</h2>
+        <p class="mb-6">Enter your tracking code or booking reference</p>
+        <div class="flex gap-2">
+          <input type="text" id="trackCode" class="input-field" placeholder="e.g. GR-9283-X">
+          <button onclick="handleTrack()" class="btn btn-primary">Track</button>
+        </div>
+      </div>
+
+      <div id="results" class="tracking-results">
+        <div class="card">
+          <div id="status-header" class="mb-8">
+            <h3 id="res-title">Parcel Status</h3>
+            <p id="res-subtitle" class="text-muted"></p>
+          </div>
+          <div id="stepper">
+            <!-- Steps injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/main.js"></script>
+  <script>
+    async function handleTrack() {
+      const code = document.getElementById('trackCode').value;
+      if (!code) return;
+
+      const res = await fetch(`/api/tracking/${code}`);
+      const data = await res.json();
+
+      const resultsDiv = document.getElementById('results');
+      const stepper = document.getElementById('stepper');
+      
+      if (res.ok) {
+        resultsDiv.style.display = 'block';
+        if (data.type === 'parcel') {
+          document.getElementById('res-title').innerText = 'Parcel Journey';
+          document.getElementById('res-subtitle').innerText = `Tracking: ${data.data.tracking_code}`;
+          
+          stepper.innerHTML = `
+            <div class="step active">
+              <div class="step-icon"></div>
+              <div>
+                <p class="font-bold">${data.data.status.replace('_', ' ').toUpperCase()}</p>
+                <p class="text-sm text-muted">Currently at office</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-icon" style="background:#ccc"></div>
+              <div>
+                <p class="text-muted">In Transit</p>
+              </div>
+            </div>
+          `;
+        } else {
+          document.getElementById('res-title').innerText = 'Trip Booking';
+          document.getElementById('res-subtitle').innerText = `${data.data.route_name} — ${data.data.trip_date}`;
+          // more trip info...
+        }
+      } else {
+        alert('Tracking code not found.');
+      }
+    }
+  </script>
+</body>
+</html>
