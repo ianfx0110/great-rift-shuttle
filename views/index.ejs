@@ -1,331 +1,462 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include('partials/head', { title: 'Home' }) %>
-</head>
-<body class="bg-bg text-text font-sans antialiased">
-    <%- include('partials/nav') %>
+<% const title = 'Great Rift Shuttle - Safe, Reliable Transport Across Kenya'; %>
+<%- include('header') %>
 
     <!-- Hero Section -->
-    <header class="relative pt-12 pb-24 overflow-hidden bg-bg border-b border-border">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-          <div class="mb-12 lg:mb-0">
-            <div class="inline-flex items-center space-x-2 bg-card px-3 py-1 rounded-full border border-border shadow-sm mb-6">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-              </span>
-              <span class="text-primary font-black text-[10px] uppercase tracking-widest">System Online: Great Rift corridor</span>
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Your Trusted Journey Across Kenya</h1>
+            <p class="hero-subtitle">Fast, Affordable, and Reliable Shuttle Services Connecting Major Towns in the Rift Valley and Western Kenya</p>
+            <div class="hero-ctas">
+                <a href="#booking" class="btn btn-primary btn-lg">Book Your Trip Now</a>
+                <a href="#parcel-service" class="btn btn-secondary btn-lg">Send a Parcel</a>
             </div>
-            <h1 class="text-5xl md:text-7xl font-black text-primary leading-[1] mb-8 tracking-tighter">
-              Premium <br/>
-              Road Travel <br/>
-              <span class="text-accent italic">Redefined.</span>
-            </h1>
-            <p class="text-lg text-slate-500 mb-10 max-w-md leading-relaxed font-medium">
-              We operate the most punctual and secure shuttle network connecting Kenya's strategic urban hubs.
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <a href="/booking" class="bg-primary text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-900 shadow-xl shadow-blue-900/20 transition-all flex items-center justify-center">
-                Secure Seat <i data-lucide="chevron-right" class="ml-2 w-4 h-4"></i>
-              </a>
-              <a href="/parcel" class="bg-card text-primary border border-border px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-bg transition-all shadow-sm flex items-center justify-center">
-                Dispatch Cargo
-              </a>
+            <div class="hero-badges">
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Safe & Reliable</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Affordable Fares</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Daily Departures</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Secure Parcels</p>
+                </div>
             </div>
-          </div>
-          <div class="relative">
-            <div class="bg-card rounded-[2.5rem] p-4 border border-border shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=1000" alt="Premium Shuttle" class="rounded-[2rem] w-full h-[480px] object-cover"/>
-            </div>
-            <!-- Floating Service Badge -->
-            <div class="absolute -bottom-8 -right-8 bg-card p-6 rounded-3xl shadow-2xl border border-border max-w-[240px] transform hover:scale-105 transition-transform">
-               <div class="bg-accent/10 w-10 h-10 rounded-xl flex items-center justify-center mb-4">
-                  <i data-lucide="shield-check" class="text-accent w-6 h-6"></i>
-               </div>
-               <h4 class="font-black text-xs text-primary uppercase mb-1">Guaranteed Safety</h4>
-               <p class="text-[10px] text-slate-400 font-bold leading-relaxed">24/7 Fleet command center monitoring every mile of your journey.</p>
-            </div>
-          </div>
         </div>
-      </div>
-    </header>
-
-    <!-- Refined Search Form -->
-    <section class="max-w-5xl mx-auto px-4 -mt-12 relative z-20">
-      <div class="bg-card p-2 rounded-[2rem] shadow-2xl border border-border">
-        <form action="/booking" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-2">
-          <div class="p-4 bg-bg rounded-2xl flex flex-col justify-center border border-transparent hover:border-border transition-all">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Departure Point</label>
-            <div class="relative">
-              <select name="origin" class="w-full bg-transparent text-sm font-black text-primary outline-none appearance-none cursor-pointer uppercase italic">
-                <option value="NAIROBI">Nairobi Hub</option>
-                <option value="NAKURU">Nakuru Node</option>
-                <option value="ELDORET">Eldoret Hub</option>
-                <option value="KISUMU">Kisumu Node</option>
-              </select>
-            </div>
-          </div>
-          <div class="p-4 bg-bg rounded-2xl flex flex-col justify-center border border-transparent hover:border-border transition-all">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Arrival Hub</label>
-            <div class="relative">
-              <select name="destination" class="w-full bg-transparent text-sm font-black text-primary outline-none appearance-none cursor-pointer uppercase italic">
-                <option value="ELDORET">Eldoret Hub</option>
-                <option value="NAKURU" selected>Nakuru Node</option>
-                <option value="NAIROBI">Nairobi Hub</option>
-                <option value="KISUMU">Kisumu Node</option>
-              </select>
-            </div>
-          </div>
-          <div class="p-4 bg-bg rounded-2xl flex flex-col justify-center border border-transparent hover:border-border transition-all">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Travel Matrix</label>
-            <input type="date" name="date" id="search-date" class="bg-transparent text-sm font-black text-primary outline-none cursor-pointer w-full uppercase" required />
-          </div>
-          <button type="submit" class="bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/10 flex items-center justify-center p-4 italic">
-            Inspect Availability <i data-lucide="radar" class="ml-2 w-4 h-4"></i>
-          </button>
-        </form>
-      </div>
     </section>
 
-    <!-- Popular Routes Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16 space-y-6 md:space-y-0 text-center md:text-left">
-        <div>
-          <span class="text-accent font-black text-[10px] uppercase tracking-[3px] mb-2 block">Premium Connectivity</span>
-          <h2 class="text-4xl font-black text-primary italic uppercase tracking-tighter">Recommended Routes</h2>
-          <p class="text-xs text-slate-400 font-bold uppercase tracking-tight mt-1">The most popular connections in the region.</p>
+    <!-- Quick Booking Section -->
+    <section class="booking-widget" id="booking">
+        <div class="container">
+            <h2>Book Your Journey in Minutes</h2>
+            <div class="booking-form">
+                <div class="form-group">
+                    <label for="from">From</label>
+                    <select id="from" required>
+                        <option value="">Select departure town</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="kitale">Kitale</option>
+                        <option value="bungoma">Bungoma</option>
+                        <option value="nakuru">Nakuru</option>
+                        <option value="naivasha">Naivasha</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="to">To</label>
+                    <select id="to" required>
+                        <option value="">Select destination</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="kitale">Kitale</option>
+                        <option value="bungoma">Bungoma</option>
+                        <option value="nakuru">Nakuru</option>
+                        <option value="naivasha">Naivasha</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Travel Date</label>
+                    <input type="date" id="date" required />
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Passengers</label>
+                    <input type="number" id="passengers" min="1" max="11" value="1" required />
+                </div>
+                <button class="btn btn-primary btn-lg" style="width: 100%; margin-top: auto;">Check Availability</button>
+            </div>
+            <p class="booking-note"><a href="#parcel-service">Not traveling? Send a parcel instead →</a></p>
         </div>
-        <a href="/routes" class="flex items-center text-[10px] font-black text-primary border-b-2 border-accent pb-1 uppercase tracking-widest hover:text-accent transition-all group">
-          View Logistics Map <i data-lucide="map" class="ml-2 w-4 h-4 group-hover:rotate-12 transition-transform"></i>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <% recommendedRoutes.forEach(route => { %>
-          <div class="bg-card rounded-[2.5rem] border border-border p-10 hover:border-accent transition-all group relative overflow-hidden flex flex-col justify-between">
-            <div class="absolute -right-8 -top-8 opacity-10 group-hover:opacity-20 transition-opacity">
-              <i data-lucide="route" class="w-48 h-48 text-primary"></i>
-            </div>
-            <div>
-              <div class="flex justify-between items-start mb-8">
-                <div class="bg-accent/10 w-14 h-14 rounded-2xl flex items-center justify-center">
-                  <i data-lucide="navigation" class="text-accent w-7 h-7"></i>
-                </div>
-                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Daily Service</span>
-              </div>
-              <h3 class="text-2xl font-black text-primary uppercase italic mb-2 tracking-tight"><%= route.destination %></h3>
-              <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6"><%= route.origin %> <i data-lucide="arrow-right" class="inline w-3 h-3 mx-2 text-accent"></i> <%= route.destination %></p>
-              
-              <div class="space-y-4 mb-8">
-                <div class="flex items-center text-xs font-black text-primary uppercase">
-                  <i data-lucide="clock" class="w-4 h-4 mr-3 text-accent"></i> <%= route.estimated_duration %> Duration
-                </div>
-                <div class="flex items-center text-xs font-black text-primary uppercase">
-                  <i data-lucide="bus" class="w-4 h-4 mr-3 text-accent"></i> Premium Shuttle
-                </div>
-                <div class="flex items-center text-xs font-black text-primary uppercase">
-                  <i data-lucide="shield-check" class="w-4 h-4 mr-3 text-accent"></i> Licensed Service
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-8 border-t border-border flex justify-between items-center">
-               <div>
-                  <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Settlement Rate</p>
-                  <p class="text-2xl font-black text-primary italic uppercase tracking-tighter">KES <%= (Math.floor(Math.random() * 700) + 800).toLocaleString() %></p>
-               </div>
-               <a href="/booking" class="bg-primary text-white w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-accent transition-all shadow-lg group-hover:scale-110">
-                  <i data-lucide="arrow-right" class="w-5 h-5"></i>
-               </a>
-            </div>
-          </div>
-        <% }) %>
-      </div>
     </section>
 
-    <!-- Operational Edge Section (Why Us) -->
-    <section class="bg-primary py-24 relative overflow-hidden">
-      <div class="absolute inset-0 opacity-5 pointer-events-none">
-         <div class="grid grid-cols-6 h-full w-full">
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-         </div>
-      </div>
-      
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="lg:grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <span class="text-accent font-black text-[10px] uppercase tracking-[3px] mb-4 block">Standard of Excellence</span>
-            <h2 class="text-5xl font-black text-white italic uppercase tracking-tighter mb-8 leading-[1.1]">Elite Transport <br/>Infrastructure.</h2>
-            <p class="text-lg text-blue-100 font-medium leading-relaxed mb-10">
-              We don't just move passengers; we manage a high-precision logistics ecosystem designed for safety, speed, and absolute reliability.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div class="flex items-start space-x-4">
-                <div class="bg-blue-800 p-3 rounded-xl border border-white/10 shrink-0">
-                  <i data-lucide="shield-check" class="text-accent w-6 h-6"></i>
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2>Why Travelers Trust Great Rift Shuttle</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Safety First</h3>
+                    <p>Well-maintained 11-seater PSVs with certified, experienced drivers. Your safety is our priority.</p>
                 </div>
-                <div>
-                  <h4 class="text-sm font-black text-white uppercase italic tracking-wide">Guaranteed Safety</h4>
-                  <p class="text-[10px] text-blue-200 uppercase tracking-widest mt-1">24/7 Fleet command center monitoring every mile.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Punctual & Reliable</h3>
+                    <p>Regular departures throughout the day. We respect your time and deliver on our promises.</p>
                 </div>
-              </div>
-              <div class="flex items-start space-x-4">
-                <div class="bg-blue-800 p-3 rounded-xl border border-white/10 shrink-0">
-                  <i data-lucide="zap" class="text-accent w-6 h-6"></i>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable Fares</h3>
+                    <p>Competitive pricing without compromising on comfort or safety. Great value for money.</p>
                 </div>
-                <div>
-                  <h4 class="text-sm font-black text-white uppercase italic tracking-wide">Rapid Deployment</h4>
-                  <p class="text-[10px] text-blue-200 uppercase tracking-widest mt-1">Express nodes for expedited regional travel.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">🪑</div>
+                    <h3>Comfortable Journey</h3>
+                    <p>Spacious, well-maintained vehicles with relaxing seats. Long journeys made comfortable.</p>
                 </div>
-              </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Easy Booking</h3>
+                    <p>Book online, call us, or visit any of our offices. Flexible booking options for your convenience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Reliable Courier</h3>
+                    <p>Secure parcel and luggage delivery across all our routes. Trusted by businesses and families.</p>
+                </div>
             </div>
-          </div>
-          <div class="mt-16 lg:mt-0 relative">
-             <div class="grid grid-cols-2 gap-4">
-                <div class="space-y-4 pt-12">
-                   <div class="bg-blue-800/40 backdrop-blur-md p-1 rounded-[2rem] border border-white/10 shadow-2xl">
-                      <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=600" class="rounded-[1.8rem] w-full h-64 object-cover" alt="Fleet"/>
-                   </div>
-                   <div class="bg-accent p-8 rounded-[2rem] shadow-2xl">
-                      <p class="text-white font-black text-4xl italic uppercase tracking-tighter">99.8%</p>
-                      <p class="text-[10px] text-white/80 font-black uppercase tracking-widest mt-2">Punctuality Score</p>
-                   </div>
-                </div>
-                <div class="space-y-4">
-                   <div class="bg-blue-800/40 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 shadow-2xl">
-                      <p class="text-white font-black text-4xl italic uppercase tracking-tighter">150k+</p>
-                      <p class="text-[10px] text-white/80 font-black uppercase tracking-widest mt-2">Corridor Missions</p>
-                   </div>
-                   <div class="bg-card/10 backdrop-blur-md p-1 rounded-[2rem] border border-white/5">
-                      <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80&w=600" class="rounded-[1.8rem] w-full h-80 object-cover grayscale brightness-50" alt="Landscape"/>
-                   </div>
-                </div>
-             </div>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- Scale of Excellence Section -->
-    <section class="max-w-7xl mx-auto px-4 py-24">
-      <div class="bg-card border border-border rounded-[3.5rem] p-12 lg:p-24 shadow-sm flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0">
-        <div class="lg:max-w-md text-center lg:text-left">
-          <h2 class="text-4xl font-black text-primary uppercase italic tracking-tighter mb-6 leading-[1.1]">The Regional Impact Matrix</h2>
-          <p class="text-slate-400 text-sm font-medium leading-relaxed">Scaling Kenya's transport infrastructure through digitized manifests, secure settlement protocols, and a zero-latency fleet network.</p>
+    <!-- Routes Section -->
+    <section class="routes" id="routes">
+        <div class="container">
+            <h2>We Go Where You Need to Go</h2>
+            <p class="section-subtitle">Connecting major towns across Kenya's Rift Valley and Western regions</p>
+            <div class="routes-grid">
+                <div class="route-card">
+                    <h3>Nairobi ↔ Eldoret</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~5-6 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 9 AM, 1 PM, 5 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 800</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Kitale</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~6-7 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 1 PM, 6 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 1,000</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Bungoma</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~7-8 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 12 PM, 4 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 1,200</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Nakuru</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~2-3 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> Every hour, 6 AM - 6 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 400</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Eldoret ↔ Kitale</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~1.5-2 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 7 AM, 10 AM, 2 PM, 5 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 300</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Eldoret ↔ Bungoma</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~2-3 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 8 AM, 1 PM, 4 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 400</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+            </div>
         </div>
-        <div class="flex-1 grid grid-cols-2 lg:grid-cols-3 gap-12 lg:ml-24">
-          <div class="text-center lg:text-left">
-            <p class="text-5xl font-black text-accent italic tracking-tighter uppercase mb-2">12M+</p>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Kilometers Logged</p>
-          </div>
-          <div class="text-center lg:text-left">
-            <p class="text-5xl font-black text-primary italic tracking-tighter uppercase mb-2">2x</p>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Fleet Expansion</p>
-          </div>
-          <div class="text-center lg:text-left">
-            <p class="text-5xl font-black text-accent italic tracking-tighter uppercase mb-2">24/7</p>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Live Surveillance</p>
-          </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚐</div>
+                    <h3>Passenger Transport</h3>
+                    <p>Comfortable, reliable shuttle service for business, leisure, and family travel. Daily departures with assigned seating and flexible bookings.</p>
+                    <a href="#booking" class="btn btn-outline">Book Your Seat</a>
+                </div>
+                <div class="service-card" id="parcel-service">
+                    <div class="service-icon">📦</div>
+                    <h3>Parcel & Courier</h3>
+                    <p>Affordable, secure parcel delivery across all routes. Perfect for e-commerce, businesses, and personal parcels with door-to-door options.</p>
+                    <a href="#contact" class="btn btn-outline">Send a Parcel</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎉</div>
+                    <h3>Shuttle Hire</h3>
+                    <p>Professional shuttle hiring for corporate events, weddings, group tours, and team outings with flexible hire periods.</p>
+                    <a href="#contact" class="btn btn-outline">Inquire About Hiring</a>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Booking Your Journey is Simple</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Your Route</h3>
+                    <p>Choose departure town and destination, pick your travel date.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose Your Trip</h3>
+                    <p>View available times, select seats, and see pricing upfront.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Book & Pay</h3>
+                    <p>Provide details and pay securely via M-Pesa, card, or bank transfer.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Travel or Receive</h3>
+                    <p>Get confirmation, report before departure, and track parcels real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fares Section -->
+    <section class="fares">
+        <div class="container">
+            <h2>Transparent, Competitive Fares</h2>
+            <div class="fares-table-wrapper">
+                <table class="fares-table">
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Standard Fare</th>
+                            <th>Peak Season</th>
+                            <th>Parcel Rate (per kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nairobi - Eldoret</td>
+                            <td>KES 800-1,200</td>
+                            <td>KES 1,500-2,500</td>
+                            <td>KES 20-50</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Kitale</td>
+                            <td>KES 1,000-1,500</td>
+                            <td>KES 2,000-3,000</td>
+                            <td>KES 25-60</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Bungoma</td>
+                            <td>KES 1,200-1,800</td>
+                            <td>KES 2,200-3,500</td>
+                            <td>KES 30-70</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Nakuru</td>
+                            <td>KES 400-600</td>
+                            <td>KES 800-1,200</td>
+                            <td>KES 10-25</td>
+                        </tr>
+                        <tr>
+                            <td>Eldoret - Kitale</td>
+                            <td>KES 300-500</td>
+                            <td>KES 600-1,000</td>
+                            <td>KES 15-30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="fares-note">* Fares vary by season and demand. Book early for best rates. Children below 3 travel free.</p>
+            <a href="#routes" class="btn btn-primary">View Full Fares</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Safe journey, punctual arrival. Great Rift Shuttle is my go-to option for Nairobi-Eldoret travel. Highly recommended!"</p>
+                    <p class="testimonial-author"><strong>Grace K.</strong> — Business Professional</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Affordable parcel delivery service. My online orders reach customers reliably. Best courier option in Western Kenya."</p>
+                    <p class="testimonial-author"><strong>Samuel M.</strong> — E-commerce Entrepreneur</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Hired a shuttle for our company team-building event. Professional drivers, clean vehicles, excellent service. Will use again!"</p>
+                    <p class="testimonial-author"><strong>Margaret W.</strong> — HR Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="safety">
+        <div class="container">
+            <h2>Your Safety is Our Priority</h2>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>✓ Certified PSV Vehicles</h3>
+                    <p>All vehicles regularly maintained and certified for passenger safety.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Professional Drivers</h3>
+                    <p>Experienced, trained drivers committed to safe driving practices.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Insurance Coverage</h3>
+                    <p>Full insurance for passengers and cargo.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ 24/7 Support</h3>
+                    <p>Dedicated support team to assist with any issues.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Security Measures</h3>
+                    <p>Tracking systems, secure luggage handling, monitored checkpoints.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Emergency Response</h3>
+                    <p>Quick response protocols and emergency contact support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations">
+        <div class="container">
+            <h2>Visit Our Booking Offices</h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <h3>Nairobi Office</h3>
+                    <p><strong>Location:</strong> Mfangano Trade Centre, Mfangano Street, Nairobi</p>
+                    <p><strong>Phone:</strong> +254 700 123 456</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+                <div class="location-card">
+                    <h3>Eldoret Office</h3>
+                    <p><strong>Location:</strong> Opposite National Bank, Oloo Street, Eldoret</p>
+                    <p><strong>Phone:</strong> +254 700 234 567</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+                <div class="location-card">
+                    <h3>Kitale Office</h3>
+                    <p><strong>Location:</strong> Kitale Trans Nzoia Building, Main Street, Kitale</p>
+                    <p><strong>Phone:</strong> +254 700 345 678</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="max-w-7xl mx-auto px-4 py-24">
-      <div class="text-center mb-16">
-        <span class="text-accent font-black text-[10px] uppercase tracking-[3px] mb-2 block">Intelligence Briefing</span>
-        <h2 class="text-4xl font-black text-primary uppercase italic tracking-tighter">Common Inquiries</h2>
-        <p class="text-xs text-slate-400 font-bold uppercase tracking-tight mt-1">Everything you need to know about our logistics corridor.</p>
-      </div>
-      
-      <div class="max-w-3xl mx-auto space-y-4">
-        <div class="bg-card border border-border rounded-2xl overflow-hidden">
-          <button class="w-full px-8 py-6 text-left flex justify-between items-center group" onclick="this.nextElementSibling.classList.toggle('hidden')">
-            <span class="text-sm font-black text-primary uppercase italic">How do you compare to North Rift Shuttle?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-accent group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="px-8 pb-6 text-xs font-medium text-slate-500 leading-relaxed hidden">
-            While local competitors like North Rift provide baseline transport, Great Rift Shuttle operates an elite digital-first corridor. We feature real-time GPS tracking for every manifest, professional logistics specialists (drivers), and a synchronized M-Pesa settlement protocol that ensures zero downtime and absolute security for our regional travelers.
-          </div>
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I book a ticket online?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Use our booking widget at the top of this page. Select your departure town, destination, travel date, and number of passengers, then click "Check Availability." You'll see available trips and can proceed to payment via M-Pesa, card, or bank transfer.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are your cancellation and refund policies?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Full refund if cancellation is made 24+ hours before departure. For cancellations within 24 hours, 50% refund may be applied. No refunds once a trip has begun. Reschedule to another trip for free within 30 days.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I send parcels via Great Rift Shuttle?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Yes! We offer secure parcel delivery across all our routes. Contact our office or call +254 700 123 456 for parcel rates. Rates vary by weight (KES 20-70 per kg depending on route) and contents are insured.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What happens if I miss my departure?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>If you miss your booked departure, you can reschedule to the next available trip at no extra charge, subject to availability. Contact us immediately if you're running late.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is the shuttle safe for families and children?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Absolutely. Our vehicles are certified PSVs with safety features, professional drivers, and insurance coverage. Children below 3 years travel free. We prioritize family safety and comfort on every journey.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I hire a shuttle for an event?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Yes! We offer shuttle hiring for corporate events, weddings, group tours, and team outings. Contact our office at +254 700 123 456 or email us to discuss your requirements and get a quote.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What payment methods do you accept?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>We accept M-Pesa, credit/debit cards, bank transfers, and cash payments at our offices. Online payments are secure and encrypted.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="bg-card border border-border rounded-2xl overflow-hidden">
-          <button class="w-full px-8 py-6 text-left flex justify-between items-center group" onclick="this.nextElementSibling.classList.toggle('hidden')">
-            <span class="text-sm font-black text-primary uppercase italic">What is the Parcel Security Protocol?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-accent group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="px-8 pb-6 text-xs font-medium text-slate-500 leading-relaxed hidden">
-            Every parcel is assigned a unique tracking hash and scanned at every node (terminal). Recipients receive a secure pick-up code via SMS, ensuring that only the authorized party can finalize the cargo retrieval process.
-          </div>
-        </div>
-
-        <div class="bg-card border border-border rounded-2xl overflow-hidden">
-          <button class="w-full px-8 py-6 text-left flex justify-between items-center group" onclick="this.nextElementSibling.classList.toggle('hidden')">
-            <span class="text-sm font-black text-primary uppercase italic">Can I modify my Booking Manifest?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-accent group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="px-8 pb-6 text-xs font-medium text-slate-500 leading-relaxed hidden">
-            Yes. Manifest adjustments can be made via our Support Terminal or through the Digital Gateway (app) up to 2 hours before terminal departure.
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- App Promo / Digital Gateway -->
-    <section class="max-w-7xl mx-auto px-4 pb-24">
-      <div class="bg-accent rounded-[3.5rem] p-12 lg:p-24 text-white flex flex-col lg:flex-row items-center justify-between relative overflow-hidden group">
-        <div class="absolute right-0 bottom-0 opacity-10 -translate-y-1/4 translate-x-1/4 pointer-events-none group-hover:rotate-12 transition-transform duration-1000">
-           <i data-lucide="smartphone" class="w-[500px] h-[500px]"></i>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Travel?</h2>
+            <p>Choose from over 15 routes across Kenya's Rift Valley and Western regions</p>
+            <div class="cta-buttons">
+                <a href="#booking" class="btn btn-primary btn-lg">Book a Trip Now</a>
+                <a href="#parcel-service" class="btn btn-secondary btn-lg">Send a Parcel</a>
+                <a href="#contact" class="btn btn-outline btn-lg">Hire a Shuttle</a>
+                <a href="tel:+254700123456" class="btn btn-outline btn-lg">Call Us: +254 700 123 456</a>
+            </div>
         </div>
-        <div class="relative z-10 lg:max-w-xl text-center lg:text-left">
-          <span class="text-white font-black text-[10px] uppercase tracking-[3px] mb-4 block opacity-80">Digital Terminal Interface</span>
-          <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-6 leading-tight">Your Corridor Hub <br/>In Your Pocket</h2>
-          <p class="text-white/80 text-lg font-bold leading-relaxed mb-10">Real-time GPS tracking, instant manifest verification, and automated M-Pesa settlement for the modern elite traveler.</p>
-          
-          <!-- App buttons removed as per request -->
-        </div>
-        <div class="hidden lg:block relative z-10 w-72 h-[480px] bg-primary rounded-[3rem] border-[12px] border-bg shadow-2xl overflow-hidden p-6">
-           <div class="w-24 h-1 bg-slate-300 rounded-full mx-auto mb-10"></div>
-           <div class="space-y-6">
-              <div class="w-full h-12 bg-accent/20 rounded-2xl border border-white/10"></div>
-              <div class="flex space-x-4">
-                 <div class="flex-1 h-32 bg-white/5 rounded-2xl border border-white/5"></div>
-                 <div class="flex-1 h-32 bg-white/5 rounded-2xl border border-white/5"></div>
-              </div>
-              <div class="w-full h-8 bg-accent/20 rounded-xl"></div>
-              <div class="space-y-3 pt-6">
-                 <div class="w-full h-3 bg-white/10 rounded-full"></div>
-                 <div class="w-3/4 h-3 bg-white/10 rounded-full"></div>
-                 <div class="w-1/2 h-3 bg-white/10 rounded-full"></div>
-              </div>
-           </div>
-        </div>
-      </div>
     </section>
 
-    <%- include('partials/footer') %>
 
     <script>
-      // Enforce temporal integrity (Future dates only)
-      document.addEventListener('DOMContentLoaded', () => {
-         const dateInput = document.getElementById('search-date');
-         const now = new Date();
-         const today = now.toISOString().split('T')[0];
-         dateInput.min = today;
-         dateInput.value = today;
-         
-         // Lucide update for injected icons
-         if (window.lucide) {
-           lucide.createIcons();
-         }
-      });
+        const bookingForm = document.querySelector('.booking-form');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for booking! Proceed to payment details.');
+            });
+        }
     </script>
-</body>
-</html>
+
+<%- include('footer') %>

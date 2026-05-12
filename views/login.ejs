@@ -1,120 +1,320 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include('partials/head', { title: 'Login' }) %>
-</head>
-<body class="bg-bg min-h-screen flex items-center justify-center p-4 font-sans antialiased text-text">
-    <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 bg-card rounded-3xl shadow-2xl overflow-hidden border border-border transition-colors duration-300">
-      <!-- Info Side -->
-      <div class="bg-primary p-12 text-white hidden md:flex flex-col justify-between relative overflow-hidden">
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-blue-800 rounded-full blur-3xl opacity-50"></div>
-        <div class="relative z-10">
-          <a href="/" class="flex items-center space-x-2 mb-12 group">
-            <div class="bg-accent p-1.5 rounded-lg group-hover:scale-110 transition-transform shadow-lg shadow-orange-500/20">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-white">
-                  <path d="M4 18h16"></path>
-                  <circle cx="18" cy="18" r="2"></circle>
-                  <circle cx="6" cy="18" r="2"></circle>
-                  <path d="M19 18V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9"></path>
-                  <path d="M16 9v4"></path>
-                  <path d="M3 13h16"></path>
-                  <path d="M8 9h4"></path>
-                </svg>
-            </div>
-            <span class="text-xl font-black italic tracking-tighter uppercase">Great Rift<span class="text-accent underline decoration-2 underline-offset-4">Shuttle</span></span>
-          </a>
-          <h2 class="text-4xl font-black leading-[1.1] mb-6">Experience <br/>Premium <br/><span class="text-accent italic">Transit.</span></h2>
-          <p class="text-blue-200 text-sm font-medium leading-relaxed">Access your bookings, manage your logistics, and stay updated with real-time transit alerts across the Great Rift Valley.</p>
-        </div>
-        <div class="relative z-10 bg-blue-800 border border-blue-700 p-4 rounded-xl">
-           <p class="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-2">Fleet Status</p>
-           <p class="text-xs font-bold leading-relaxed text-blue-100 italic">21 Active Shuttles currently en route to Nairobi, Nakuru, and Kisumu.</p>
-        </div>
-      </div>
+﻿<% const title = 'Login - Great Rift Shuttle Admin & Driver Portal'; %>
+<%- include('header') %>
 
-      <!-- Form Side -->
-      <div class="p-8 md:p-12 self-center">
-        <div id="login-view">
-          <span class="text-accent font-black text-[10px] uppercase tracking-[3px] mb-2 block">Registration</span>
-          <h3 class="text-2xl font-black text-primary mb-1">log in</h3>
-          <p class="text-xs text-slate-400 font-bold mb-8 uppercase tracking-tight">Join Kenya's elite transport network.</p>
-          
-          <form id="login-form" class="space-y-5">
-            <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Email ID</label>
-              <input type="email" id="login-email" required placeholder="noah@example.com" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all"/>
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Password</label>
-              <div class="relative">
-                <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-bg border border-border rounded-xl px-4 py-3.5 text-sm font-semibold focus:ring-2 focus:ring-accent outline-none transition-all pr-12"/>
-                <button type="button" id="toggle-pw" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-accent transition-colors">
-                  <i data-lucide="eye" class="w-4 h-4"></i>
-                </button>
-              </div>
-            </div>
-            <div class="flex items-center justify-between mt-4 mb-2">
-              <label class="flex items-center gap-2 cursor-pointer group">
-                <input type="checkbox" id="login-remember" class="w-4 h-4 rounded border-border text-accent focus:ring-accent accent-accent cursor-pointer"/>
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-primary transition-colors">Remember Manifest</span>
-              </label>
-              <a href="#" class="text-[10px] font-black text-accent uppercase tracking-widest hover:underline">Lost Protocol?</a>
+<!-- Login Page -->
+<section class="auth-container">
+    <div class="auth-form-wrapper">
+        <div class="auth-form-card">
+            <h1>Login</h1>
+            <p class="auth-subtitle">Access your Great Rift Shuttle account</p>
+
+            <!-- Tab Navigation -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab(event, 'admin')">Admin Portal</button>
+                <button class="auth-tab" onclick="switchTab(event, 'driver')">Driver Portal</button>
             </div>
 
-            <button type="submit" class="w-full bg-primary text-white font-black py-4 rounded-xl hover:bg-blue-900 transition-all shadow-xl shadow-blue-900/10 mt-6 text-sm uppercase tracking-widest italic translate-y-0 active:translate-y-1">
-              Log In
-            </button>
-          </form>
-          
-          <p class="mt-8 text-center text-[10px] font-black uppercase tracking-widest text-slate-400">
-            Dont have an account? <a href="/signup" class="text-accent hover:underline italic">Sign Up</a>
-          </p>
+            <!-- Admin Login Form -->
+            <form id="admin-form" class="auth-form active-form" method="POST" action="/login">
+                <div class="form-group">
+                    <label for="admin-email">Email Address</label>
+                    <input type="email" id="admin-email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="admin-remember" name="remember">
+                    <label for="admin-remember">Remember me</label>
+                </div>
+                <input type="hidden" name="role" value="admin">
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Login as Admin</button>
+                <p class="auth-link">Don''t have an account? <a href="/register/admin">Register here</a></p>
+            </form>
+
+            <!-- Driver Login Form -->
+            <form id="driver-form" class="auth-form" method="POST" action="/login">
+                <div class="form-group">
+                    <label for="driver-id">Driver ID or License Number</label>
+                    <input type="text" id="driver-id" name="driver_id" required placeholder="Enter your driver ID">
+                </div>
+                <div class="form-group">
+                    <label for="driver-password">Password</label>
+                    <input type="password" id="driver-password" name="password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="driver-remember" name="remember">
+                    <label for="driver-remember">Remember me</label>
+                </div>
+                <input type="hidden" name="role" value="driver">
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Login as Driver</button>
+                <p class="auth-link">Don''t have an account? <a href="/register/driver">Register here</a></p>
+            </form>
+
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <p class="auth-help-text">
+                <strong>Forgot your password?</strong><br>
+                Contact our support team at +254 700 123 456 or email info@greatriftshuttle.com
+            </p>
         </div>
-      </div>
+
+        <!-- Info Card -->
+        <div class="auth-info-card">
+            <h3>New to Great Rift Shuttle?</h3>
+            <p>Join our team or access customer services.</p>
+            <ul class="auth-features">
+                <li>✓ Easy booking and tracking</li>
+                <li>✓ Real-time updates</li>
+                <li>✓ Secure payments</li>
+                <li>✓ 24/7 support</li>
+            </ul>
+            <a href="/" class="btn btn-outline" style="width: 100%;">Back to Home</a>
+        </div>
     </div>
+</section>
 
-    <script type="module">
-      import { api } from '/src/main.js';
-      lucide.createIcons();
+<style>
+.auth-container {
+    padding: 3rem var(--spacing-md);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    margin-top: 60px;
+}
 
-      // Check for remembered email
-      const rememberedEmail = localStorage.getItem('rememberedEmail');
-      if (rememberedEmail) {
-        document.getElementById('login-email').value = rememberedEmail;
-        document.getElementById('login-remember').checked = true;
-      }
+.auth-form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    width: 100%;
+}
 
-      // Password Toggle
-      const pwInput = document.getElementById('login-password');
-      const toggleBtn = document.getElementById('toggle-pw');
-      toggleBtn.onclick = () => {
-        const isPw = pwInput.type === 'password';
-        pwInput.type = isPw ? 'text' : 'password';
-        toggleBtn.innerHTML = isPw ? '<i data-lucide="eye-off" class="w-4 h-4"></i>' : '<i data-lucide="eye" class="w-4 h-4"></i>';
-        lucide.createIcons();
-      };
+.auth-form-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
 
-      document.getElementById('login-form').onsubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const res = await api.post('/api/auth/login', {
-            email: document.getElementById('login-email').value,
-            password: document.getElementById('login-password').value,
-            rememberMe: document.getElementById('login-remember').checked
-          });
-          
-          if (document.getElementById('login-remember').checked) {
-            localStorage.setItem('rememberedEmail', document.getElementById('login-email').value);
-          } else {
-            localStorage.removeItem('rememberedEmail');
-          }
+.auth-form-card h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
 
-          localStorage.setItem('user', JSON.stringify(res.user));
-          window.location.href = '/dashboard';
-        } catch (error) {
-          alert('Auth failed: ' + error.message);
-        }
-      };
-    </script>
-</body>
-</html>
+.auth-subtitle {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: var(--spacing-md);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: var(--transition);
+}
+
+.auth-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.auth-tab:hover {
+    color: var(--primary-color);
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active-form {
+    display: block;
+}
+
+.auth-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 95, 143, 0.1);
+}
+
+.auth-form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.auth-form .checkbox input[type="checkbox"] {
+    width: auto;
+}
+
+.auth-form .checkbox label {
+    margin-bottom: 0;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    position: relative;
+}
+
+.auth-divider span {
+    background-color: white;
+    padding: 0 var(--spacing-sm);
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background-color: var(--border-color);
+    z-index: -1;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    color: var(--text-light);
+}
+
+.auth-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.auth-help-text {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.auth-info-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.auth-info-card h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+}
+
+.auth-info-card p {
+    margin-bottom: var(--spacing-lg);
+}
+
+.auth-features {
+    list-style: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.auth-features li {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+
+.auth-info-card .btn-outline {
+    border-color: white;
+    color: white;
+    margin-top: auto;
+}
+
+.auth-info-card .btn-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .auth-form-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-info-card {
+        display: none;
+    }
+}
+</style>
+
+<script>
+function switchTab(event, tabName) {
+    event.preventDefault();
+    
+    // Hide all forms
+    document.querySelectorAll('.auth-form').forEach(form => {
+        form.classList.remove('active-form');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Show selected form
+    document.getElementById(tabName + '-form').classList.add('active-form');
+    event.target.classList.add('active');
+}
+</script>
+
+<%- include('footer') %>
