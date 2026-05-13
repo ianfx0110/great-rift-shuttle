@@ -1,0 +1,10 @@
+<% if (typeof messages !== 'undefined' && messages.success) { %>
+    <div class="toast success animate-slide-in">
+        <%= messages.success %>
+    </div>
+<% } %>
+<% if (typeof messages !== 'undefined' && messages.error) { %>
+    <div class="toast error animate-slide-in">
+        <%= messages.error %>
+    </div>
+<% } %>

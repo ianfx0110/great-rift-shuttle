@@ -1,0 +1,66 @@
+<footer class="site-footer">
+    <div class="container section">
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-4 mb-2">
+                <div class="footer-brand mb-1">
+                    <i class="ti ti-bus"></i> Great Rift Shuttle
+                </div>
+                <p class="text-muted">Kenya's premier travel and logistics SACCO. Connecting you safely and comfortably across the Rift and beyond.</p>
+                <div class="social-links mt-1">
+                    <a href="#"><i class="ti ti-brand-facebook"></i></a>
+                    <a href="#"><i class="ti ti-brand-twitter"></i></a>
+                    <a href="#"><i class="ti ti-brand-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="pure-u-1 pure-u-md-1-4 mb-2">
+                <h5 class="mb-1">Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/book">Passenger Booking</a></li>
+                    <li><a href="/parcel">Parcel & Courier</a></li>
+                    <li><a href="/freight">Freight & Cargo</a></li>
+                    <li><a href="/charter">Charter Hire</a></li>
+                </ul>
+            </div>
+            
+            <div class="pure-u-1 pure-u-md-1-4 mb-2">
+                <h5 class="mb-1">Company</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/routes">Our Routes</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="pure-u-1 pure-u-md-1-4 mb-2">
+                <h5 class="mb-1">Contact Us</h5>
+                <p>Nairobi, Kenya</p>
+                <p>Phone: +254 700 000000</p>
+                <p>Email: info@greatriftshuttle.co.ke</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom mt-2 pt-1">
+            <p>&copy; 2026 Great Rift Shuttle SACCO. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/254700000000" class="whatsapp-float" target="_blank">
+        <i class="ti ti-brand-whatsapp"></i>
+    </a>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+<% if (typeof extraJS !== 'undefined') { %>
+    <% extraJS.forEach(function(js) { %>
+        <script src="/js/<%= js %>.js"></script>
+    <% }); %>
+<% } %>
+
+</body>
+</html>

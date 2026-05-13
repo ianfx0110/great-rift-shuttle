@@ -1,0 +1,36 @@
+<section class="section container">
+    <div class="mb-2">
+        <h1>Driver Dashboard</h1>
+        <p class="text-muted">Welcome back, <%= user.first_name %>.</p>
+    </div>
+
+    <div class="card">
+        <h3 class="mb-1">My Assigned Trips</h3>
+        <% if (trips.length === 0) { %>
+            <p>No trips assigned to you yet.</p>
+        <% } else { %>
+            <table class="pure-table w-full">
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Route</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% trips.forEach(t => { %>
+                        <tr>
+                            <td><%= new Date(t.departure_time).toLocaleString() %></td>
+                            <td><%= t.origin %> &rarr; <%= t.destination %></td>
+                            <td><span class="badge badge-info"><%= t.status %></span></td>
+                            <td>
+                                <button class="pure-button btn-accent">Start Trip</button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</section>
