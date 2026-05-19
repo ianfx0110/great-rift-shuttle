@@ -1,47 +1,104 @@
-<section class="section container">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-center mb-2">About Great Rift Shuttle</h1>
-        
-        <p class="text-lg mb-2">Great Rift Shuttle is a leading Transport and Logistics SACCO in Kenya, dedicated to providing high-quality, safe, and efficient movement of people and goods across the country.</p>
-        
-        <div class="section">
-            <h3 class="mb-1">Our Mission</h3>
-            <p>To revolutionize land transport in East Africa through integrity, punctuality, and excellence in customer service.</p>
+﻿<% const title = 'About Great Rift Shuttle - Our Story & Mission'; %>
+<%- include('header') %>
+
+<!-- Page Header Section -->
+<section class="page-hero">
+    <div class="container">
+        <h1>About Great Rift Shuttle</h1>
+        <p>Your trusted journey partner across Kenya's Rift Valley and Western regions</p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="about-content">
+    <div class="container">
+        <div class="about-section">
+            <h2>Our Story</h2>
+            <p>Great Rift Shuttle was founded on the principle that quality transportation should be accessible, affordable, and safe for everyone. For years, we've been dedicated to connecting communities across Kenya's Rift Valley and Western regions, providing reliable shuttle services that people can depend on.</p>
+            <p>What started as a small operation has grown into a trusted brand serving thousands of passengers, students, families, and businesses monthly. Our commitment to excellence, punctuality, and customer satisfaction has made us the preferred choice for travelers in our service areas.</p>
         </div>
-        
-        <div class="section">
-            <h3 class="mb-1">Our History</h3>
-            <p>Founded by a group of visionary transporters, we started with 5 vehicles on the Nairobi-Eldoret route. Today, we manage a fleet of over 200 vehicles serving more than 30 destinations nationwide.</p>
+
+        <div class="about-section">
+            <h2>Our Mission</h2>
+            <p>To provide safe, reliable, and affordable shuttle and courier services that connect people across Kenya, enabling seamless travel and commerce while maintaining the highest standards of customer service and safety.</p>
         </div>
-        
-        <div class="section">
-            <h3 class="mb-1">Core Values</h3>
-            <ul class="mt-1">
-                <li><strong>Safety First:</strong> We never compromise on the safety of our passengers and cargo.</li>
-                <li><strong>Reliability:</strong> We respect your time and operate on strict schedules.</li>
-                <li><strong>Innovation:</strong> We leverage technology to make travel booking and parcel tracking seamless.</li>
-            </ul>
-        </div>
-        
-        <div class="mt-4 text-center">
-            <h3>Our Leadership</h3>
-            <div class="pure-g mt-2">
-                <div class="pure-u-1-3">
-                    <div class="avatar mb-1 mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: #ddd;"></div>
-                    <p class="font-bold">John Doe</p>
-                    <p class="text-sm">Chairman</p>
+
+        <div class="about-section">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>🛡️ Safety</h3>
+                    <p>Your safety is paramount. We maintain certified vehicles and employ only trained, professional drivers.</p>
                 </div>
-                <div class="pure-u-1-3">
-                    <div class="avatar mb-1 mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: #ddd;"></div>
-                    <p class="font-bold">Jane Smith</p>
-                    <p class="text-sm">CEO</p>
+                <div class="value-card">
+                    <h3>⏰ Reliability</h3>
+                    <p>We deliver on our promises. Punctuality and dependability are at the core of everything we do.</p>
                 </div>
-                <div class="pure-u-1-3">
-                    <div class="avatar mb-1 mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: #ddd;"></div>
-                    <p class="font-bold">Peter Kipchumba</p>
-                    <p class="text-sm">Director Logistics</p>
+                <div class="value-card">
+                    <h3>💰 Affordability</h3>
+                    <p>Quality transportation shouldn't break the bank. We offer competitive pricing without compromising standards.</p>
+                </div>
+                <div class="value-card">
+                    <h3>😊 Customer Focus</h3>
+                    <p>Your satisfaction matters. We continuously improve to meet and exceed your expectations.</p>
                 </div>
             </div>
         </div>
+
+        <div class="cta-box">
+            <h3>Ready to Experience the Great Rift Shuttle Difference?</h3>
+            <p>Book your journey today and discover why thousands of Kenyans trust us with their travel needs.</p>
+            <a href="/#booking" class="btn btn-primary btn-lg">Book Now</a>
+        </div>
     </div>
 </section>
+
+<style>
+.page-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 3rem var(--spacing-md);
+    text-align: center;
+    margin-top: 60px;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-hero p {
+    font-size: 1.1rem;
+}
+
+.about-content {
+    padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.about-section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.about-section h2 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-lg);
+    font-size: 2rem;
+}
+
+.cta-box {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+}
+
+@media (max-width: 768px) {
+    .page-hero h1 {
+        font-size: 1.8rem;
+    }
+}
+</style>
+
+<%- include('footer') %>

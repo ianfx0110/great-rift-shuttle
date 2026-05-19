@@ -11,6 +11,8 @@ CREATE TABLE routes (
     estimated_duration TIME
 );
 
+alter table routes modify column estimated_duration int; 
+
 CREATE TABLE vehicles (
     number_plate VARCHAR(20) PRIMARY KEY,
     model VARCHAR(50),
@@ -114,4 +116,7 @@ CREATE TABLE admin_users (
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO admin_users(username,password_hash) VALUES ('ian','$2b$10$ZDvqg98GZ2HnMEnyznQ3UuA4Z8R62jZgkxlNwfWXU5Jb1zIu9EUhW');
+INSERT INTO admin_users(username,password_hash) VALUES ('albert','tendamema');
+INSERT INTO admin_users(username,password_hash) VALUES ('joseph','gvhbjn');
+INSERT INTO admin_users(username,password_hash) VALUES ('ian','$2b$10$YVbTcabcm5KtIJ8NoP6mpeDjPbpQjcuWdrWBxIDhAq486z8L6dvUK');
+INSERT INTO admin_users(username,password_hash) VALUES ('kevin','$2b$10$LiE2toFPbtYxXYbLLLgMJ.JDGv4Sp6EOnnPWPuTKNe/xiCxYxQMbK');

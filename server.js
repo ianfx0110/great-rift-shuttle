@@ -1,26 +1,31 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 const path = require("path");
 const app = express();
 const mysql = require("mysql2");
+const { formatDate } = require("./utility");
 const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "54321",
+  password: "tendamema",
   database: "greatrift",
 });
-
-app.use(session({
-  secret: "VHSAWBYCJGFVSJGHCGEHDHGHVCGHQWXS",
-  resave: false,
-  saveUninitialized: false
-  cookie: { secure: false } // set to true if using HTTPS
-}));
-
+app.use(
+  session({
+    secret: "ugalimbogacabbagesukuma",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 }, // set to true if using HTTPS, adjust maxAge as needed- ms
+  }),
+);
 app.use(express.static("public")); // direct server to redirect any statci files(js,css,images) requests to the public folder
 app.use(express.urlencoded({ extended: true })); // middleware to parse form data
-
+// public routes - accessible to all users
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null; // make user info available in all views for conditional rendering
+  next();
+});
 app.get("/", (req, res) => {
   res.render("index.ejs");
 });
@@ -29,12 +34,6 @@ app.get("/about", (req, res) => {
 });
 app.get("/contact", (req, res) => {
   res.render("contact.ejs");
-});
-app.get("/admin", (req, res) => {
-  res.render("admindashboard.ejs");
-});
-app.get("/driver", (req, res) => {
-  res.render("driverdashboard.ejs");
 });
 app.get("/login", (req, res) => {
   res.render("login.ejs");
@@ -53,29 +52,218 @@ app.post("/login", (req, res) => {
       // if there are no errors - then check if the username exists in the database - data matching the username provided in the login form
       console.log(results);
       if (results.length === 0) {
-        return res.status(401).send("Invalid username or password");
+        return res.status(401).redirect("/login"); // redirect back to login on failed login attempt
       }
       // if the username exists - then check if the password provided in the login form matches the password hash stored in the database for that user
+      console.log("User found:", results[0]);
       const user = results[0];
       if (bcrypt.compareSync(password, user.password_hash)) {
         // use hashed passwords and a secure comparison method - bcrypt
-        req.session.userId = user.admin_id;
-        req.session.username = user.username;
-        res.send("Login successful");
-
+        req.session.user = { id: user.id, username: user.username }; // store user info in session- signing user info in a session cookie to maintain authentication state across requests
+        res.redirect("/dashboard"); // redirect to dashboard on successful login
       } else {
-        res.status(401).send("Invalid username or password");
+        res.status(401).redirect("/login"); // redirect back to login on failed login attempt
       }
     },
   );
 });
+
+// logout logic - destroy the user session and redirect to login page
+app.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.status(304).redirect("/login");
+});
+// Private Routes - only accessible to authenticated users
+app.get("/dashboard", (req, res) => {
+  if (req.session && req.session.user) {
+    res.render("dashboard.ejs"); // render user dashboard
+  } else {
+    res.status(401).redirect("/login"); // restrict access to dashboard for unauthenticated users
+  }
+});
 app.get("/register/admin", (req, res) => {
-  res.render("registeradmin.ejs");
+  if (req.session && req.session.user) {
+    res.render("registeradmin.ejs");
+  } else {
+    res.status(401).send("Not Allowed / Unauthorized ");
+  }
 });
 app.get("/register/driver", (req, res) => {
-  res.render("registerdriver.ejs");
+  if (req.session && req.session.user) {
+    res.render("registerdriver.ejs");
+  } else {
+    res.status(401).send("Not Allowed / Unauthorized ");
+  }
 });
-// get routes are for loading pages
+
+app.get("/trips", (req, res) => {
+  if (req.session && req.session.user) {
+    res.render("trips-manage.ejs");
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/bookings", (req, res) => {
+  if (req.session && req.session.user) {
+    res.render("bookings-manage.ejs");
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/routes", (req, res) => {
+  if (req.session && req.session.user) {
+    dbConn.query("SELECT * FROM routes", (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.render("routes-browse.ejs", {
+        routes: results,
+        addSuccess: req.query.addSuccess === "true",
+      });
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.post("/add-route", (req, res) => {
+  if (req.session && req.session.user) {
+    const { origin, destination, base_price, distance_km, estimated_duration } =
+      req.body;
+    const insertQuery = ` INSERT INTO routes (origin, destination, base_price, distance_km, estimated_duration) VALUES ("${origin}", "${destination}", ${base_price}, ${distance_km}, ${estimated_duration})`;
+
+    dbConn.query(insertQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/routes?addSuccess=true"); // redirect to routes page with success message on successful route addition
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/drivers", (req, res) => {
+  if (req.session && req.session.user) {
+    dbConn.query("SELECT * FROM drivers", (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.render("manage-drivers.ejs", {
+        drivers: results,
+        addSuccess: req.query.addSuccess === "true",
+        formatDate: formatDate,
+      });
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.post("/add-driver", (req, res) => {
+  if (req.session && req.session.user) {
+    const {
+      first_name,
+      last_name,
+      id_number,
+      phone_number,
+      license_number,
+      license_expiry_date,
+    } = req.body;
+    const insertQuery = `INSERT INTO drivers (first_name, last_name, id_number, phone_number, license_number, license_expiry_date) VALUES ("${first_name}", "${last_name}", "${id_number}", "${phone_number}", "${license_number}", "${license_expiry_date}")`;
+
+    dbConn.query(insertQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/drivers?addSuccess=true");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/vehicles", (req, res) => {
+  if (req.session && req.session.user) {
+    dbConn.query("SELECT * FROM vehicles", (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.render("manage-vehicles.ejs", {
+        vehicles: results,
+        addSuccess: req.query.addSuccess === "true",
+      });
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.post("/add-vehicle", (req, res) => {
+  if (req.session && req.session.user) {
+    const { number_plate, model, color, capacity, status } = req.body;
+    const insertQuery = `INSERT INTO vehicles (number_plate, model, color, capacity, status) VALUES ("${number_plate}", "${model}", "${color}", ${capacity}, "${status}")`;
+
+    dbConn.query(insertQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/vehicles?addSuccess=true");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/update-driver-status", (req, res) => {
+  if (req.session && req.session.user) {
+    const { driverId, status } = req.query;
+    const updateQuery = `UPDATE drivers SET status = "${status}" WHERE driver_id = ${driverId}`;
+
+    dbConn.query(updateQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/drivers");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/update-vehicle-status", (req, res) => {
+  if (req.session && req.session.user) {
+    const { numberPlate, status } = req.query;
+    const updateQuery = `UPDATE vehicles SET status = "${status}" WHERE number_plate = "${numberPlate}"`;
+
+    dbConn.query(updateQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/vehicles");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/payments", (req, res) => {
+  if (req.session && req.session.user) {
+    res.render("payments-manage.ejs");
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
 
 //start the app
-app.listen(3000, () => console.log("Server running on PORT 3000"));
+app.listen(3003, () => console.log("Server running on PORT 3003"));
