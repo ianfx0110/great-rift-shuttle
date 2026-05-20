@@ -1,6 +1,6 @@
-CREATE DATABASE greatrift;
+CREATE DATABASE GreatRiftShuttle;
 
-USE greatrift; 
+USE GreatRiftShuttle;
 
 CREATE TABLE routes (
     route_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -116,7 +116,4 @@ CREATE TABLE admin_users (
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO admin_users(username,password_hash) VALUES ('albert','tendamema');
-INSERT INTO admin_users(username,password_hash) VALUES ('joseph','gvhbjn');
-INSERT INTO admin_users(username,password_hash) VALUES ('ian','$2b$10$YVbTcabcm5KtIJ8NoP6mpeDjPbpQjcuWdrWBxIDhAq486z8L6dvUK');
-INSERT INTO admin_users(username,password_hash) VALUES ('kevin','$2b$10$LiE2toFPbtYxXYbLLLgMJ.JDGv4Sp6EOnnPWPuTKNe/xiCxYxQMbK');
+INSERT INTO admin_users(username,password_hash) VALUES ('ian','54321');

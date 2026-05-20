@@ -8,12 +8,12 @@ const { formatDate } = require("./utility");
 const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "tendamema",
-  database: "greatrift",
+  password: "54321",
+  database: "GreatRiftShuttle",
 });
 app.use(
   session({
-    secret: "ugalimbogacabbagesukuma",
+    secret: "qwertyuiopasdfghjklzxcvbnm", // should be a long, random string in production and stored securely
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 }, // set to true if using HTTPS, adjust maxAge as needed- ms
@@ -98,7 +98,40 @@ app.get("/register/driver", (req, res) => {
 
 app.get("/trips", (req, res) => {
   if (req.session && req.session.user) {
-    res.render("trips-manage.ejs");
+    const getDriverInfo = `select driver_id, first_name, last_name, license_number from drivers`;
+    const getRouteInfo = `select route_id, origin, destination from routes`;
+    const getVehicleInfo = `select number_plate, model from vehicles`;
+    const getAllTrips = `select * from trips`;
+    dbConn.query(getDriverInfo, (d_err, driverResults) => {
+      if (d_err) {
+        console.error("Database error:", d_err);
+        return res.status(500).send("Internal Server Error");
+      }
+      dbConn.query(getRouteInfo, (r_err, routeResults) => {
+        if (r_err) {
+          console.error("Database error:", r_err);
+          return res.status(500).send("Internal Server Error");
+        }
+        dbConn.query(getVehicleInfo, (v_err, vehicleResults) => {
+          if (v_err) {
+            console.error("Database error:", v_err);
+            return res.status(500).send("Internal Server Error");
+          }
+          dbConn.query(getAllTrips, (t_err, tripResults) => {
+            if (t_err) {
+              console.error("Database error:", t_err);
+              return res.status(500).send("Internal Server Error");
+            }
+            res.render("manage-trips.ejs", {
+              drivers: driverResults,
+              routes: routeResults,
+              vehicles: vehicleResults,
+              trips: tripResults,
+            });
+          });
+        });
+      });
+    });
   } else {
     res.status(401).redirect("/login");
   }
@@ -251,6 +284,58 @@ app.get("/update-vehicle-status", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
       res.redirect("/vehicles");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.post("/add-trip", (req, res) => {
+  if (req.session && req.session.user) {
+    const { driver_id, route_id, number_plate, departure_time, status } =
+      req.body;
+    const insertQuery = `INSERT INTO trips (driver_id, route_id, number_plate, departure_time, status) VALUES (${driver_id}, ${route_id}, "${number_plate}", "${departure_time}", "${status}")`;
+
+    dbConn.query(insertQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/trips");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/update-trip-status", (req, res) => {
+  if (req.session && req.session.user) {
+    const { tripId, status } = req.query;
+    const updateQuery = `UPDATE trips SET status = "${status}" WHERE trip_id = ${tripId}`;
+
+    dbConn.query(updateQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/trips");
+    });
+  } else {
+    res.status(401).redirect("/login");
+  }
+});
+
+app.get("/delete-trip", (req, res) => {
+  if (req.session && req.session.user) {
+    const { tripId } = req.query;
+    const deleteQuery = `DELETE FROM trips WHERE trip_id = ${tripId}`;
+
+    dbConn.query(deleteQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/trips");
     });
   } else {
     res.status(401).redirect("/login");

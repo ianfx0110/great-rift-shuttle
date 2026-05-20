@@ -709,3 +709,127 @@ tr:nth-child(even) {
 .dashboard-main::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.3);
 }
+
+/* ============================================================
+   Modal Display Fix
+   ============================================================ */
+
+.modal {
+  display: none !important;
+}
+
+.modal.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Trips Table Styles
+   ============================================================ */
+
+.trips-table-wrapper {
+  overflow-x: auto;
+}
+
+.trips-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.trips-table thead {
+  background-color: var(--light-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.trips-table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.trips-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.trips-table tbody tr:hover {
+  background-color: var(--light-color);
+}
+
+.trip-row {
+  transition: var(--transition);
+}
+
+/* ============================================================
+   Status Badge Styles
+   ============================================================ */
+
+.status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-scheduled {
+  background-color: rgba(30, 95, 143, 0.15);
+  color: var(--primary-color);
+}
+
+.status-en_route {
+  background-color: rgba(241, 196, 15, 0.15);
+  color: #f39c12;
+}
+
+.status-completed {
+  background-color: rgba(39, 174, 96, 0.15);
+  color: var(--success-color);
+}
+
+.status-cancelled {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: var(--danger-color);
+}
+
+/* ============================================================
+   Small Button Styles
+   ============================================================ */
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.btn-warning {
+  background-color: rgba(241, 196, 15, 0.15);
+  color: #f39c12;
+  border: 1px solid #f39c12;
+}
+
+.btn-warning:hover {
+  background-color: #f39c12;
+  color: white;
+}
+
+.empty-state a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.empty-state a:hover {
+  text-decoration: underline;
+}
