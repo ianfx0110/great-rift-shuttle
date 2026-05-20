@@ -1,6 +1,6 @@
-CREATE DATABASE GreatRiftShuttle;
+CREATE DATABASE greatriftshuttle;
 
-USE GreatRiftShuttle;
+USE greatriftshuttle;
 
 CREATE TABLE routes (
     route_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -116,4 +116,4 @@ CREATE TABLE admin_users (
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO admin_users(username,password_hash) VALUES ('ian','54321');
+INSERT INTO admin_users(username,password_hash) VALUES ('ian','$2b$10$jdx8XyBl3Ph9rbr2NA/XCu0jJtrS9p1Prj8dsgWbTPShC2KuLGsLy');

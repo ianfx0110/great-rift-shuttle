@@ -9,7 +9,7 @@ const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "54321",
-  database: "GreatRiftShuttle",
+  database: "greatriftshuttle",
 });
 app.use(
   session({
@@ -84,6 +84,24 @@ app.get("/dashboard", (req, res) => {
 app.get("/register/admin", (req, res) => {
   if (req.session && req.session.user) {
     res.render("registeradmin.ejs");
+  } else {
+    res.status(401).send("Not Allowed / Unauthorized ");
+  }
+});
+app.post("/register/admin", (req, res) => {
+  if (req.session && req.session.user) {
+    const { username, password } = req.body;
+    const saltRounds = 10;
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    const insertQuery = `INSERT INTO admin_users (username, password_hash) VALUES ("${username}", "${hashedPassword}")`;
+
+    dbConn.query(insertQuery, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/register/admin?success=true");
+    });
   } else {
     res.status(401).send("Not Allowed / Unauthorized ");
   }
